@@ -1,0 +1,15 @@
+{
+  "name": "sosf",
+  "version": "1.0.0",
+  "description": "severless onedrive & sharepoint function",
+  "main": "index.js",
+  "scripts": {
+    "auth": "node auth.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "node-fetch": "^2.6.1"
+  }
+}
