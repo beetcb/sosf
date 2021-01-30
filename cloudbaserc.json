@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "envId": "os-8gbejqqb74c99bcd",
+  "functionRoot": "./functions",
+  "functions": [
+    {
+      "name": "sosf",
+      "timeout": 20,
+      "envVariables": {
+        "client_id": "{{env.client_id}}",
+        "client_secret": "{{env.client_secret}}",
+        "refresh_token": "{{env.refresh_token}}",
+        "redirect_uri": "{{env.redirect_uri}}",
+        "auth_endpoint": "{{env.auth_endpoint}}"
+      },
+      "handler": "index.main"
+    }
+  ]
+}
