@@ -11,7 +11,8 @@
         "client_secret": "{{env.client_secret}}",
         "refresh_token": "{{env.refresh_token}}",
         "redirect_uri": "{{env.redirect_uri}}",
-        "auth_endpoint": "{{env.auth_endpoint}}"
+        "auth_endpoint": "{{env.auth_endpoint}}",
+        "drive_api": "{{env.drive_api}}"
       },
       "handler": "index.main"
     }

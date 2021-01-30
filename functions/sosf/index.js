@@ -1,4 +1,6 @@
 const fetch = require('node-fetch')
+const { getFile } = require('./fileRouter')
+
 const timestamp = () => (Date.now() / 1000) | 0
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',
@@ -55,9 +57,18 @@ async function getToken() {
   return token.access_token
 }
 
-async function handler() {
+async function handler({ path }) {
+  if (path === '/favicon.ico') return null
   const access_token = await getToken()
-  console.log(access_token)
+  const data = await getFile(path, access_token)
+  // https://cloud.tencent.com/document/product/583/12513#apiStructure
+  if (data)
+    return {
+      statusCode: 302,
+      headers: { Location: data['@microsoft.graph.downloadUrl'] },
+      body: null,
+    }
+  else return 'Resource not found'
 }
 
 exports.main = handler
