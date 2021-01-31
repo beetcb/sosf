@@ -5,7 +5,7 @@
   "functions": [
     {
       "name": "sosf",
-      "timeout": 20,
+      "memorySize": 128,
       "envVariables": {
         "client_id": "{{env.client_id}}",
         "client_secret": "{{env.client_secret}}",
