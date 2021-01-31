@@ -1,7 +1,6 @@
 const fetch = require('node-fetch')
 const { getFile } = require('./fileRouter')
 require('dotenv').config()
-console.log(process.env)
 
 const timestamp = () => (Date.now() / 1000) | 0
 const headers = {
