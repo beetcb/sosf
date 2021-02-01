@@ -9,5 +9,5 @@ exports.getFile = async (path, access_token) => {
     },
   })
   if (res.ok) return await res.json()
-  else console.error(res)
+  else console.error(`bad request to path: ${path}`)
 }
