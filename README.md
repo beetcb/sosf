@@ -25,7 +25,7 @@
 
 - 遵守[合理使用](https://vercel.com/docs/platform/fair-use-policy)规范：在我们使用这些云服务商表示支持的同时，也要~~优雅薅羊毛~~合理使用
 
-### 部署
+### 部署指南
 
 #### OneDrive 配置并授权
 
@@ -61,7 +61,8 @@
    ```
 
    配置完成后，sosf 会创建一个 `.env` 文件，内容大致如下：
-   ![.env](https://static.beetcb.com/env0.png)
+   
+   ![.env](https://i.imgur.com/iTGXe8I.png)
 
 1. 注册 Leancloud 开发板并进入控制台
 2. 创建开发版应用并进入应用管理界面
@@ -72,7 +73,8 @@
    ```
 
    此时 `.env` 状态大概是这样：
-   ![.env](https://static.beetcb.com/env.png)
+   
+   ![.env db](https://i.imgur.com/XoSDuz6.png)
 
 4. 安装 lean cli ⇢ 登录 ⇢ 部署你的 sosf 项目
 
@@ -81,7 +83,7 @@
 
 5. 部署成功后，我们回到控制台，左设置栏域名绑定 ⇢ 在此绑定你的域名并配置 DNS
 
-6. 部署完成了，访问地址示例：`https://domain.com/path/to/file.md`
+6. 访问地址示例：`https://domain.com/path/to/file.md`
 
 二. Vercel 云函数
 
@@ -108,7 +110,7 @@
    # 按照提示完成部署
    ```
 
-3. 到此部署就完成了，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，参考 [custom-domains](https://vercel.com/docs/custom-domains#)
+3. 到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
 
 三. 腾讯云开发 tcb
 
@@ -144,3 +146,15 @@
    ```
 
 6. 等待几分钟，就可以开始预览了，访问示例：`https://domain.com/path/to/file.md`
+
+### 作者
+
+[`beetcb`](https://www.beetcb.com)
+
+邮箱: `i@beetcb.com`
+
+### 鸣谢
+
+- [Tencent tcb](https://github.com/TencentCloudBase)
+- [Leancloud](https://github.com/leancloud)
+- [Vercel](https://github.com/vercel/vercel)
