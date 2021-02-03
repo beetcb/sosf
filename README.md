@@ -66,7 +66,7 @@
 
 1. 注册 Leancloud 开发板并进入控制台
 2. 创建开发版应用并进入应用管理界面
-3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 在项目根目录 `.env` 文件里新增
+3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 `d1d037116a8d1c4ad56017e9`) ⇢ 在项目根目录 `.env` 文件里新增
 
    ```js
    dbId = 6017e9d1d037116a8d1c4ad5
@@ -100,7 +100,7 @@
 
 1. 注册[国际 Leancloud 开发板](https://console.leancloud.app/)并进入控制台
 2. 创建开发版应用并进入应用管理界面
-3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，勾选`无限制`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 左设置栏应用 keys，复制 Credentials 下的前两个参数的值(AppID AppKey) ⇢ 在项目根目录 `.env` 文件里新增这四项 key-value，例如：
+3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，勾选`无限制`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 左设置栏应用 keys，复制 Credentials 下的前两个参数的值(AppID AppKey) ⇢ 在项目根目录 `.env` 文件里新增这三项 key-value，例如：
 
    ```js
    dbId = d1d037116a8d1c4ad56017e9
@@ -125,6 +125,7 @@
    ```
 
    到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
+6. 访问地址示例：`https://domain.com/?path=/path/to/file.md`
 
 三. 腾讯云开发 tcb
 
