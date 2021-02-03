@@ -29,7 +29,43 @@ async function acquireToken() {
     })
     return await storeToken(res)
   } catch (e) {
-    console.warn(e)
+    console.warn(e.statusText)
+  }
+}
+
+// Get or Update the token stored in the leancloud
+async function db(token) {
+  const { AppID, AppKey, dbId } = process.env
+  const dbEndpoint = `https://${AppID.slice(
+    0,
+    8
+  )}.api.lncldglobal.com/1.1/classes/sosf/${dbId}`
+  const headers = {
+    'X-LC-Id': AppID,
+    'X-LC-Key': AppKey,
+    'Content-Type': 'application/json',
+  }
+
+  if (!token) {
+    const res = await fetch(dbEndpoint, {
+      headers,
+    })
+    if (res.ok) {
+      console.log('Get token form database')
+      return (await res.json()).token
+    }
+  } else {
+    const res = await fetch(dbEndpoint, {
+      headers,
+      body: JSON.stringify({ token }),
+      method: 'PUT',
+    })
+    if (res.ok) {
+      console.warn('Token stored to database')
+    } else {
+      console.error(res.statusText)
+    }
+    return token
   }
 }
 
@@ -37,38 +73,35 @@ async function storeToken(res) {
   const { expires_in, access_token, refresh_token } = await res.json()
   const expires_at = timestamp() + expires_in
   const token = { expires_at, access_token, refresh_token }
-  return (process.env.token = JSON.stringify(token))
+  return await db(token)
 }
 
 function checkExpired(token) {
-  token = JSON.parse(token)
   const { expires_at } = token
   if (timestamp() > expires_at) {
-    console.warn('Updated stored token')
     return true
-  } else {
-    console.warn('Using stored token')
   }
 }
 
 async function getToken() {
-  let token = process.env.token
+  let token = await db()
   if (!token || checkExpired(token)) token = await acquireToken()
-  token = JSON.parse(token)
   return token.access_token
 }
 
 async function handler(req, res) {
   const { path } = req.query
-  if (!path)
+  if (!path) {
     res.send(
-      'Plz specify the <path> param. For example: https://your.app?path=/demo.svg'
+      'Plz specify the <path> param. For example: https://your.app/?path=/demo.svg'
     )
-  const access_token = await getToken()
-  const data = await getFile(path, access_token)
+  } else {
+    const access_token = await getToken()
+    const data = await getFile(path, access_token)
 
-  if (data) res.redirect(data['@microsoft.graph.downloadUrl'])
-  else res.send('Resource not found')
+    if (data) res.redirect(data['@microsoft.graph.downloadUrl'])
+    else res.send('Resource not found')
+  }
 }
 
 module.exports = handler
