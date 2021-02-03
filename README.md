@@ -61,19 +61,21 @@
    ```
 
    配置完成后，sosf 会创建一个 `.env` 文件，内容大致如下：
-   
+
    ![.env](https://i.imgur.com/iTGXe8I.png)
 
 1. 注册 Leancloud 开发板并进入控制台
 2. 创建开发版应用并进入应用管理界面
-3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 输入框内填入 `token` (字面意思，填入 token 这五个字母就行) ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 在项目根目录 `.env` 文件里新增
+3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 在项目根目录 `.env` 文件里新增
 
    ```js
    dbId = 6017e9d1d037116a8d1c4ad5
    ```
 
+   这一步是为了持久保存访问 graph 的 `access-token`，因为 severless function 是无状态的
+
    此时 `.env` 状态大概是这样：
-   
+
    ![.env db](https://i.imgur.com/XoSDuz6.png)
 
 4. 安装 lean cli ⇢ 登录 ⇢ 部署你的 sosf 项目
@@ -96,21 +98,33 @@
    # 在此根据提示开始配置
    ```
 
-1. 安装 vercel cli 并登录：
+1. 注册[国际 Leancloud 开发板](https://console.leancloud.app/)并进入控制台
+2. 创建开发版应用并进入应用管理界面
+3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，勾选`无限制`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 左设置栏应用 keys，复制 Credentials 下的前两个参数的值(AppID AppKey) ⇢ 在项目根目录 `.env` 文件里新增这四项 key-value，例如：
+
+   ```js
+   dbId = d1d037116a8d1c4ad56017e9
+   AppID = rrdYFdniaMdYXbMMIUGUusc64SMJTevMY
+   AppKey = IkoR0JGItmcYnyAsqoySF7Fc
+   ```
+
+   同样，dbId 是为了持久保存访问 graph 的 `access-token`，因为 severless function 是无状态的。而且由于我们在 vercel 里面访问 leancloud 的数据库，需要额外的验证值(AppID AppKey)
+
+4. 安装 vercel cli 并登录：
 
    ```bash
    npm i -g vercel
    vercel login
    ```
 
-2. 部署：
+5. 部署：
 
    ```bash
    vercel --prod
    # 按照提示完成部署
    ```
 
-3. 到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
+   到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
 
 三. 腾讯云开发 tcb
 
