@@ -1,11 +1,13 @@
 {
   "version": "2.0",
-  "envId": "os-8gbejqqb74c99bcd",
+  "envId": "sosf-5ge56wj5d314f4b1",
   "functionRoot": "./functions",
   "functions": [
     {
       "name": "sosf",
       "memorySize": 128,
+      "timeout": 5,
+      "installDependency": true,
       "envVariables": {
         "client_id": "{{env.client_id}}",
         "client_secret": "{{env.client_secret}}",

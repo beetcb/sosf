@@ -1,4 +1,6 @@
 const fetch = require('node-fetch')
+const cloudbase = require('@cloudbase/node-sdk')
+const { URLSearchParams } = require('url') // NodeJS 8.9
 const { getFile } = require('./fileRouter')
 
 const timestamp = () => (Date.now() / 1000) | 0
@@ -32,28 +34,40 @@ async function acquireToken() {
   }
 }
 
+async function db(token) {
+  const app = cloudbase.init({})
+  const db = app.database()
+  if (!token) {
+    const res = await db.collection('sosf').doc('token').get()
+    const data = res.data[0]
+    if (data) {
+      console.log('Get token from database')
+      return data
+    }
+  } else {
+    await db.collection('sosf').update(token)
+    console.log('Stored token to database')
+    return token
+  }
+}
+
 async function storeToken(res) {
   const { expires_in, access_token, refresh_token } = await res.json()
   const expires_at = timestamp() + expires_in
   const token = { expires_at, access_token, refresh_token }
-  return (process.env.token = JSON.stringify(token))
+  return await db(token)
 }
 
 function checkExpired(token) {
-  token = JSON.parse(token)
   const { expires_at } = token
   if (timestamp() > expires_at) {
-    console.warn('Updated stored token')
     return true
-  } else {
-    console.warn('Using stored token')
   }
 }
 
 async function getToken() {
-  let token = process.env.token
+  let token = await db()
   if (!token || checkExpired(token)) token = await acquireToken()
-  token = JSON.parse(token)
   return token.access_token
 }
 
