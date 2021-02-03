@@ -2,11 +2,15 @@
 
 **S**everless **O**neDrive & **S**harePoint **F**unction.
 
-或许是**国内**访问最快的 OneDrive **免服务器**图床程序，专为**世纪互联**用户打造
+或许是**国内**访问最快的 OneDrive **免服务器**图床程序(或视频床、音乐床、...床)，专为**世纪互联**用户打造
 
-> 注：SharePoint 文档储存功能和 OneDrive 网盘类似，本说明将他们统称为 OneDrive
+🌡注意：受限于国内网络环境，本说明图片可能不能正常显示，或者你想查看部署的效果，请查看 [此篇博文](https://www.beetcb.com/posts/22/)
+
+> 注：SharePoint 文档储存功能和 OneDrive 网盘类似，本说明将他们统称为 OneDrive。
 
 ### 特点
+
+- 与现有免费图床服务的区别：我们有 OneDrive 😎，所以 sosf 可以托管任何文件(图片、视频、下载链接)，并且无储存空间限制(几乎，你甚至还可以用 SharePoint 扩展空间)
 
 - 访问速度快：`sosf` 使用国内 Severless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
 
@@ -100,7 +104,7 @@
 
 1. 注册[国际 Leancloud 开发板](https://console.leancloud.app/)并进入控制台
 2. 创建开发版应用并进入应用管理界面
-3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，勾选`无限制`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 d1d037116a8d1c4ad56017e9) ⇢ 左设置栏应用 keys，复制 Credentials 下的前两个参数的值(AppID AppKey) ⇢ 在项目根目录 `.env` 文件里新增这三项 key-value，例如：
+3. 左储存栏结构化数据 ⇢ 创建 `class` ⇢ 名称填入 `sosf`，勾选`无限制`，其它默认 ⇢ 点击该 class 名称，右栏添加行 ⇢ 获取此行的 `ObjectId` 值(比如 `d1d037116a8d1c4ad56017e9`) ⇢ 左设置栏应用 keys，复制 Credentials 下的前两个参数的值(AppID AppKey) ⇢ 在项目根目录 `.env` 文件里新增这三项 key-value，例如：
 
    ```js
    dbId = d1d037116a8d1c4ad56017e9
