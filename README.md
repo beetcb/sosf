@@ -60,6 +60,8 @@
 
    - [ ] 使用免费资源(记得勾选)
 
+   **注意**：直接部署计费模式为**按量计费**，如果你需要使用包月类型的免费额度，请首先进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费) ⇢ 然后点击**部署按钮**，选择已有环境为刚刚创建的环境
+
 1. 本地获取机密环境变量：
 
    ```bash
@@ -79,7 +81,7 @@
 
 3. 到此，应该部署成功了，如需自定义域名，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)。访问示例：`https://domain.com/path/to/file.md`
 
-如果你需要使用包月类型的免费额度，不**自动付费**，请参考 <details><summary>手动部署</summary>  
+当然，我们也支持<details><summary>手动部署</summary>  
 0. 配置机密环境变量：
 
 ```bash
