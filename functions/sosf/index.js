@@ -35,7 +35,7 @@ async function acquireToken() {
 }
 
 async function db(token) {
-  const app = cloudbase.init({})
+  const app = cloudbase.init({ env: process.env.ENV_ID })
   const db = app.database()
   if (!token) {
     const res = await db.collection('sosf').doc('token').get()
