@@ -1,6 +1,5 @@
 const fetch = require('node-fetch')
 const cloudbase = require('@cloudbase/node-sdk')
-const { URLSearchParams } = require('url') // NodeJS 8.9
 const { getFile } = require('./fileRouter')
 
 const timestamp = () => (Date.now() / 1000) | 0
@@ -34,18 +33,22 @@ async function acquireToken() {
   }
 }
 
+// Init db, Get & Store access_token from/to db
 async function db(token) {
   const app = cloudbase.init({ env: process.env.ENV_ID })
-  const db = app.database()
+  const db = app.database().collection('sosf')
   if (!token) {
-    const res = await db.collection('sosf').doc('token').get()
+    let res = await db.doc('token').get()
     const data = res.data[0]
     if (data) {
       console.log('Get token from database')
       return data
+    } else {
+      res = await db.add({ _id: 'token', test: '' })  
+      console.log('Init token document')
     }
   } else {
-    await db.collection('sosf').doc('token').update(token)
+    const res = await db.doc('token').update(token)
     console.log('Stored token to database')
     return token
   }
