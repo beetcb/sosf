@@ -6,12 +6,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "auth": "node tools/auth.js"
+    "auth": "node auth-cli/auth.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "leancloud-storage": "^4.10.0",
     "leanengine": "^3.7.0",
+    "inquirer": "^7.3.3",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {},
