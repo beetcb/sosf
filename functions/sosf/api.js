@@ -10,9 +10,6 @@ function checkExpired(token) {
 }
 
 const timestamp = () => (Date.now() / 1000) | 0
-const headers = {
-  'content-type': 'application/x-www-form-urlencoded',
-}
 
 async function acquireToken() {
   const {
@@ -32,7 +29,9 @@ async function acquireToken() {
         client_secret,
         refresh_token,
       }).toString()}&redirect_uri=${redirect_uri}`,
-      headers,
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
     })
     return await storeToken(res)
   } catch (e) {
