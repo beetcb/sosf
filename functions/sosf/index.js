@@ -45,7 +45,7 @@ async function db(token) {
       return data
     }
   } else {
-    await db.collection('sosf').update(token)
+    await db.collection('sosf').doc('token').update(token)
     console.log('Stored token to database')
     return token
   }
@@ -61,6 +61,7 @@ async function storeToken(res) {
 function checkExpired(token) {
   const { expires_at } = token
   if (timestamp() > expires_at) {
+    console.log('Token expired')
     return true
   }
 }
@@ -75,7 +76,6 @@ async function handler({ path }) {
   if (path === '/favicon.ico') return null
   const access_token = await getToken()
   const data = await getFile(path, access_token)
-  // https://cloud.tencent.com/document/product/583/12513#apiStructure
   if (data)
     return {
       statusCode: 302,
