@@ -20,10 +20,11 @@
 
 - 多平台部署支持
 
-  - [Leancloud 云引擎开发版](https://www.leancloud.cn/engine/)：限制是每天 1GB 外网出流量，`sosf` 流量消耗少，我相信 1GB 完全够用了。此外，公网访问必须绑定备案域名，详见 [定价](https://www.leancloud.cn/pricing/)。
-  - [腾讯云开发免费额度](https://cloud.tencent.com/product/tcb)：它的限制就多了，首先云函数每月有使用量限制 `执行内存(GB) * 执行时间(s)` 为 1000 GBs，并且云函数公网访问月流量限制为 1 GB，详见 [免费额度](https://cloud.tencent.com/document/product/876/39095)。 所以我推荐使用 leancloud。
+  - [Leancloud 云引擎开发版 (🎉)](https://www.leancloud.cn/engine/)：每天 1GB 外网出流量，`sosf` 流量消耗少，我相信 1GB 完全够用了。此外，公网访问必须绑定备案域名，详见 [定价](https://www.leancloud.cn/pricing/)；缺点是它有个[休眠策略](https://leancloud.cn/docs/leanengine_plan.html#hash643734278)
+  
+  - [腾讯云开发免费额度 (⚡)](https://cloud.tencent.com/product/tcb)：就速度而言它应该是最快的，缺点是每月有使用量限制 `执行内存(GB) * 执行时间(s)` 为 1000 GBs，云函数公网访问月流量限制为 1 GB，详见 [免费额度](https://cloud.tencent.com/document/product/876/39095)。如果你觉得服务不错，也可按量付费表示支持
 
-  除此之外，[Vercel](https://vercel.com/docs/serverless-functions/introduction) 国内访问速度也不错，不需要备案，免费额度也绝对够用：云函数使用量 360000 GBs，月流量 100 GB, 详见 [Fair Use Policy](https://vercel.com/docs/platform/fair-use-policy)(良心！🌸)
+  - [Vercel Severless Func (🌸)](https://vercel.com/docs/serverless-functions/introduction)：它是国外服务器，速度不如前两家；不过国内访问速度也不错，不需要备案，免费额度也绝对够用：云函数使用量限制 `执行内存(GB) * 执行时间(h)` 为100 GB-Hrs，月流量 100 GB, 详见 [Fair Use Policy](https://vercel.com/docs/platform/fair-use-policy)
 
 - 遵守[合理使用](https://vercel.com/docs/platform/fair-use-policy)规范：在我们使用这些云服务商表示支持的同时，也要~~优雅薅羊毛~~合理使用
 
@@ -47,7 +48,7 @@
 
 #### 云平台配置并部署
 
-> 请在以下三种平台中任选其一。此外，`.env` 文件包含各种敏感参数，sosf 默认把它列入 .gitignore。因此，推荐使用各平台提供的 cli 命令行导入, 而不要使用 git repo 导入
+> 请在以下三种平台中任选其一(我推荐使用 leancloud，相对稳定，速度也快)。此外，`.env` 文件包含各种敏感参数，sosf 默认把它列入 .gitignore。因此，推荐使用各平台提供的 cli 命令行导入, 而不要使用 git repo 导入
 
 一. Leancloud 云引擎
 
@@ -89,7 +90,42 @@
 
 6. 访问地址示例：`https://domain.com/path/to/file.md`
 
-二. Vercel 云函数
+二. 腾讯云开发 tcb
+
+0. 配置机密环境变量：
+
+   ```bash
+   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
+   npm i
+   npm run auth
+   # 在此根据提示开始配置
+   ```
+
+1. 进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费，如果你觉得服务不错，也可按量付费表示支持) ⇢ 进入控制台
+2. 环境总览下复制 `环境 ID(envId)` ⇢ 并改动本地代码中 `cloudbaserc.json` 中的 `envId` ⇢ 基础服务栏`数据库` ⇢ 新建并进入集合(名为 `sosf`) ⇢ 添加文档，输入 ID，命名为 `token`，删除默认 key - value 并保存
+3. 安装 tcb cli 并授权登录：
+
+   ```bash
+   npm i -g @cloudbase/cli
+   tcb login
+   ```
+
+4. 部署云函数：
+
+   ```bash
+   tcb fn deploy
+   ```
+
+5. 指定 HTTP 访问路径：
+
+   ```bash
+   tcb service create -p / -f sosf
+   # 让函数在根目录触发
+   ```
+
+6. 等待几分钟，就可以开始预览了，访问示例：`https://domain.com/path/to/file.md`
+
+三. Vercel Severless Func
 
 0. 配置机密型环境变量：
 
@@ -130,41 +166,6 @@
 
 6. 访问地址示例：`https://domain.com/?path=/path/to/file.md`
 
-三. 腾讯云开发 tcb
-
-0. 配置机密环境变量：
-
-   ```bash
-   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
-   npm i
-   npm run auth
-   # 在此根据提示开始配置
-   ```
-
-1. 进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费) ⇢ 进入控制台
-2. 环境总览下复制 `环境 ID(envId)` ⇢ 并改动本地代码中 `cloudbaserc.json` 中的 `envId` ⇢ 基础服务栏`数据库` ⇢ 新建并进入集合(名为 `sosf`) ⇢ 添加文档，输入 ID，命名为 `token`，删除默认 key - value 并保存
-3. 安装 tcb cli 并授权登录：
-
-   ```bash
-   npm i -g @cloudbase/cli
-   tcb login
-   ```
-
-4. 部署云函数：
-
-   ```bash
-   tcb fn deploy
-   ```
-
-5. 指定 HTTP 访问路径：
-
-   ```bash
-   tcb service create -p / -f sosf
-   # 让函数在根目录触发
-   ```
-
-6. 等待几分钟，就可以开始预览了，访问示例：`https://domain.com/path/to/file.md`
-
 ### 作者
 
 [`beetcb`](https://www.beetcb.com)
@@ -174,7 +175,7 @@
 ### 鸣谢
 
 - [Tencent tcb](https://github.com/TencentCloudBase)
-- [Leancloud](https://github.com/leancloud)
+- [LeanCloud](https://github.com/leancloud)
 - [Vercel](https://github.com/vercel/vercel)
 
 🌡 注意：受限于国内网络环境，本说明图片可能不能正常显示，或者你想查看部署的效果，请查看 [此篇博文](https://www.beetcb.com/posts/22/)
