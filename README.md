@@ -73,7 +73,11 @@
 
    - [ ] 使用免费资源(记得勾选)
 
-3. 进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 编辑环境变量 ⇢ 将本地 `.env` 文件里的 key-value 依次填入环境变量并保存。到此，应该部署成功了，如需自定义域名和函数访问路径，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)。访问示例：`https://domain.com/path/to/file.md`
+3. 进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 编辑环境变量 ⇢ 将本地 `.env` 文件里的 key-value 依次填入环境变量并保存。到此，应该部署成功了，如需自定义域名和函数访问路径，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)，类似下图：
+
+   ![](https://sosf.beetcb.com/?path=/postimg/22/env-console.png)
+
+4. 访问示例：`https://domain.com/path/to/file.md`
 
 如果你需要使用包月类型的免费额度，不**自动付费**，请参考 <details><summary>手动部署</summary>  
 0. 配置机密环境变量：
@@ -87,7 +91,7 @@ npm run auth
 
 1. 进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费，如果你觉得服务不错，也可按量付费表示支持) ⇢ 进入控制台
 
-2. 环境总览下复制 `环境 ID(envId)` ⇢ 并改动本地代码中 `cloudbaserc.json` 中的 `envId` ⇢ 基础服务栏`数据库` ⇢ 新建并进入集合(名为 `sosf`) ⇢ 添加文档，输入 ID，命名为 `token`，删除默认 key - value 并保存
+2. 环境总览下基础服务栏`数据库` ⇢ 新建并进入集合(名为 `sosf`)
 
 3. 安装 tcb cli 并授权登录：
 
