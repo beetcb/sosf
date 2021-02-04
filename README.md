@@ -10,6 +10,35 @@
 
 - 与现有免费图床服务的区别：我们有 OneDrive 😎，所以 sosf 可以托管任何文件(图片、视频、下载链接)，并且无储存空间限制(几乎，你甚至还可以用 SharePoint 扩展空间)
 
+- 提供 API 接口，供二次开发：sosf 命名范围很广，肯定不能浪得虚名。因此我们提供了 API 接口来扩展应用功能，例如：<details><summary>一个列出 OneDrive 根目录所有文件的示例</summary>
+     ```js
+     const fetch = require('node-fetch')
+     const { getToken, drive_api } = require('./api')
+
+     async function handler() {
+       /**
+        * Grab access_token
+        */
+       const { access_token } = await getToken()
+       /**
+        * Using access_token to access graph api, drive_api is equivalent to the:
+        * - `/sites/{site-id}/drive` in sharepoint
+        * - `/me/drive` in onedrive
+        */
+       const res = await fetch(`${drive_api}/root/children`, {
+         headers: {
+           Authorization: `bearer ${access_token}`,
+         },
+       })
+       if (res.ok) {
+         return await res.json()
+       }
+     }
+
+     exports.main = handler
+     ```
+</details>
+
 - 访问速度快：`sosf` 使用国内 Severless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
 
 - CLI 配置，简单快速：微软 Graph 的授权过程比较麻烦，为此我提供了一个 cli 工具来加快部署。用户填入所有的配置项后，该工具自动写入配置文件，无需多余操作
