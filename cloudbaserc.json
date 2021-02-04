@@ -1,7 +1,26 @@
 {
-  "envId": "sosf-7gcp2jrk356e3367",
+  "envId": "{{env.ENV_ID}}",
   "version": "2.0",
   "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+  "functions": [
+    {
+      "name": "sosf",
+      "memorySize": 128,
+      "timeout": 5,
+      "runtime": "Nodejs10.15",
+      "installDependency": true,
+      "envVariables": {
+        "ENV_ID": "{{env.ENV_ID}}",
+        "client_id": "{{env.client_id}}",
+        "client_secret": "{{env.client_secret}}",
+        "refresh_token": "{{env.refresh_token}}",
+        "redirect_uri": "{{env.redirect_uri}}",
+        "auth_endpoint": "{{env.auth_endpoint}}",
+        "drive_api": "{{env.drive_api}}"
+      },
+      "handler": "index.main"
+    }
+  ],
   "framework": {
     "name": "sosf",
     "plugins": {
@@ -9,7 +28,7 @@
         "use": "@cloudbase/framework-plugin-function",
         "inputs": {
           "servicePaths": {
-            "helloworld": "/"
+            "sosf": "/"
           },
           "functionRootPath": "./functions",
           "functions": [
@@ -20,13 +39,7 @@
               "runtime": "Nodejs10.15",
               "installDependency": true,
               "envVariables": {
-                "ENV_ID": "{{env.ENV_ID}}",
-                "client_id": "{{env.client_id}}",
-                "client_secret": "{{env.client_secret}}",
-                "refresh_token": "{{env.refresh_token}}",
-                "redirect_uri": "{{env.redirect_uri}}",
-                "auth_endpoint": "{{env.auth_endpoint}}",
-                "drive_api": "{{env.drive_api}}"
+                "ENV_ID": "{{env.ENV_ID}}"
               },
               "handler": "index.main"
             }
