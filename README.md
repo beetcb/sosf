@@ -11,33 +11,34 @@
 - 与现有免费图床服务的区别：我们有 OneDrive 😎，所以 sosf 可以托管任何文件(图片、视频、下载链接)，并且无储存空间限制(几乎，你甚至还可以用 SharePoint 扩展空间)
 
 - 提供 API 接口，供二次开发：sosf 命名范围很广，肯定不能浪得虚名。因此我们提供了 API 接口来扩展应用功能，例如：<details><summary>一个列出 OneDrive 根目录所有文件的示例</summary>
-     ```js
-     const fetch = require('node-fetch')
-     const { getToken, drive_api } = require('./api')
+   ```js
+   const fetch = require('node-fetch')
+   const { getToken, drive_api } = require('./api')
 
-     async function handler() {
-       /**
-        * Grab access_token
-        */
-       const { access_token } = await getToken()
-       /**
-        * Using access_token to access graph api, drive_api is equivalent to the:
-        * - `/sites/{site-id}/drive` in sharepoint
-        * - `/me/drive` in onedrive
-        */
-       const res = await fetch(`${drive_api}/root/children`, {
-         headers: {
-           Authorization: `bearer ${access_token}`,
-         },
-       })
-       if (res.ok) {
-         return await res.json()
-       }
+   async function handler() {
+   /**
+   * Grab access_token
+      */
+   const { access_token } = await getToken()
+   /**
+   * Using access_token to access graph api, drive_api is equivalent to the:
+      * - `/sites/{site-id}/drive` in sharepoint
+      * - `/me/drive` in onedrive
+      */
+   const res = await fetch(`${drive_api}/root/children`, {
+      headers: {
+         Authorization: `bearer ${access_token}`,
+      },
+   })
+   if (res.ok) {
+      return await res.json()
      }
+   }
 
-     exports.main = handler
-     ```
-</details>
+   exports.main = handler
+   ```
+  </details>
+
 
 - 访问速度快：`sosf` 使用国内 Severless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
 
@@ -142,7 +143,7 @@ npm run auth
    tcb service create -p / -f sosf
    # 让函数在根目录触发
    ```
-6. 等待几分钟，就可以开始预览了，访问示例：`https://domain.com/path/to/file.md`
+6. 等待几分钟，就可以开始预览了，访问示例：`https://your.app/path/to/file.md`
 </details>
 
 ##### 二. Leancloud 云引擎
@@ -176,14 +177,20 @@ npm run auth
 
    ![.env db](https://i.imgur.com/XoSDuz6.png)
 
-4. 安装 lean cli ⇢ 登录 ⇢ 部署你的 sosf 项目
+4. 安装 lean cli：[安装文档](https://leancloud.cn/docs/leanengine_cli.html#hash1443149115) ⇢ 登录 ⇢ 绑定 ⇢ 部署你的 sosf 项目
 
-- [安装文档](https://leancloud.cn/docs/leanengine_cli.html#hash1443149115)
-- [部署文档](https://leancloud.cn/docs/leanengine_cli.html#hash-1210017446)
+   ```bash
+   lean login
+   # 登录
+   lean switch
+   # 绑定
+   lean deploy
+   # 部署
+   ```
 
-5. 部署成功后，我们回到控制台，左设置栏域名绑定 ⇢ 在此绑定你的域名并配置 DNS
+5. 部署成功后，我们回到控制台，左设置栏域名绑定 ⇢ 在此绑定你的域名
 
-6. 访问地址示例：`https://domain.com/path/to/file.md`
+6. 访问地址示例：`https://your.app/path/to/file.md`
 
 ##### 三. Vercel Severless Func
 
@@ -224,7 +231,7 @@ npm run auth
 
    到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
 
-6. 访问地址示例：`https://domain.com/?path=/path/to/file.md`
+6. 访问地址示例：`https://your.app/?path=/path/to/file.md`
 
 ### 作者
 
