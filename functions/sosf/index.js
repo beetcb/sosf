@@ -18,7 +18,7 @@ async function handler(req, res) {
     case '/1.1/functions/_ops/metadatas':
     case '/__engine/1/ping':
     case '/':
-      res.end('Plz specify the <path> param. For example: https://your.app?path=/demo.svg')
+      res.end('Plz specify the <path> param. For example: https://your.app/path/to/file')
       break
     default:
       const access_token = await getToken()
