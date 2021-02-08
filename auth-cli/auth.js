@@ -77,13 +77,13 @@ async function init() {
     {
       type: 'input',
       name: 'code',
-      message: `登录地址:${auth_endpoint}/authorize?${new URLSearchParams({
+      message: `登录地址:\n${auth_endpoint}/authorize?${new URLSearchParams({
         client_id,
         scope: deploy_type
           ? 'Files.Read.All Files.ReadWrite.All offline_access'
           : 'Sites.Read.All Sites.ReadWrite.All offline_access',
         response_type: 'code',
-      }).toString()}&redirect_uri=${redirect_uri}\n请输入浏览器返回的地址:`,
+      }).toString()}&redirect_uri=${redirect_uri}\n请输入浏览器访问后重定向的地址:`,
     },
   ]
 
@@ -188,7 +188,7 @@ function delKey(credentials) {
   await getDriveApi(credentials)
   delKey(credentials)
   writeFileSync(
-    './.env',
+    '../.env',
     Object.keys(credentials).reduce((env, e) => {
       return `${env}${e} = ${credentials[e]}${EOL}`
     }, '')
