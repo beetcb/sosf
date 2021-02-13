@@ -2,6 +2,12 @@ const fetch = require('node-fetch')
 const Conf = require('@beetcb/tcb-conf')
 const conf = new Conf(5)
 
+// Get & Store access_token from/to db
+// Using tcb-conf as fake db
+function db(token) {
+  token ? conf.get('token') : conf.set('token', token)
+}
+
 function checkExpired(token) {
   const { expires_at } = token
   if (timestamp() > expires_at) {
@@ -38,12 +44,6 @@ async function acquireToken() {
   } catch (e) {
     console.warn(e)
   }
-}
-
-// Init db, Get & Store access_token from/to db
-// Using tcb-conf as db
-function db(token) {
-  token ? conf.get('token') : conf.set('token')
 }
 
 async function storeToken(res) {
