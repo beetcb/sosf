@@ -1,5 +1,6 @@
 const fetch = require('node-fetch')
-const cloudbase = require('@cloudbase/node-sdk')
+const Conf = require('@beetcb/tcb-conf')
+const conf = new Conf(5)
 
 function checkExpired(token) {
   const { expires_at } = token
@@ -40,35 +41,20 @@ async function acquireToken() {
 }
 
 // Init db, Get & Store access_token from/to db
-async function db(token) {
-  const app = cloudbase.init({ env: process.env.ENV_ID })
-  const db = app.database().collection('sosf')
-  if (!token) {
-    let res = await db.doc('token').get()
-    const data = res.data[0]
-    if (data) {
-      console.log('Get token from database')
-      return data
-    } else {
-      res = await db.add({ _id: 'token', test: '' })
-      console.log('Init token document')
-    }
-  } else {
-    const res = await db.doc('token').update(token)
-    console.log('Stored token to database')
-    return token
-  }
+// Using tcb-conf as db
+function db(token) {
+  token ? conf.get('token') : conf.set('token')
 }
 
 async function storeToken(res) {
   const { expires_in, access_token, refresh_token } = await res.json()
   const expires_at = timestamp() + expires_in
   const token = { expires_at, access_token, refresh_token }
-  return await db(token)
+  return db(token)
 }
 
 exports.getToken = async () => {
-  let token = await db()
+  let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
   return token.access_token
 }

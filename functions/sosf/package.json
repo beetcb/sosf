@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "@cloudbase/node-sdk": "^2.5.0"
+    "@beetcb/tcb-conf": "^0.0.3"
   }
 }
