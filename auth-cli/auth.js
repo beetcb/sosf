@@ -75,7 +75,7 @@ async function init() {
           ? 'Files.Read.All Files.ReadWrite.All offline_access'
           : 'Sites.Read.All Sites.ReadWrite.All offline_access',
         response_type: 'code',
-      }).toString()}&redirect_uri=${redirect_uri}\n请输入浏览器访问后重定向的地址:`,
+      }).toString()}&redirect_uri=${redirect_uri}\n请输入浏览器访问后重定向的地址:\n`,
     },
   ]
 
