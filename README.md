@@ -11,34 +11,35 @@
 - 与现有免费图床服务的区别：我们有 OneDrive 😎，所以 sosf 可以托管任何文件(图片、视频、下载链接)，并且无储存空间限制(几乎，你甚至还可以用 SharePoint 扩展空间)
 
 - 提供 API 接口，供二次开发：sosf 命名范围很广，肯定不能浪得虚名。因此我们提供了 API 接口来扩展应用功能，例如：<details><summary>一个列出 OneDrive 根目录所有文件的示例</summary>
-   ```js
-   const fetch = require('node-fetch')
-   const { getToken, drive_api } = require('./api')
 
-   async function handler() {
-   /**
-   * Grab access_token
-      */
-   const { access_token } = await getToken()
-   /**
-   * Using access_token to access graph api, drive_api is equivalent to the:
-      * - `/sites/{site-id}/drive` in sharepoint
-      * - `/me/drive` in onedrive
-      */
-   const res = await fetch(`${drive_api}/root/children`, {
+  ```js
+  const fetch = require('node-fetch')
+  const { getToken, drive_api } = require('./api')
+
+  async function handler() {
+    /**
+     * Grab access_token
+     */
+    const { access_token } = await getToken()
+    /**
+     * Using access_token to access graph api, drive_api is equivalent to the:
+     * - `/sites/{site-id}/drive` in sharepoint
+     * - `/me/drive` in onedrive
+     */
+    const res = await fetch(`${drive_api}/root/children`, {
       headers: {
-         Authorization: `bearer ${access_token}`,
+        Authorization: `bearer ${access_token}`,
       },
-   })
-   if (res.ok) {
+    })
+    if (res.ok) {
       return await res.json()
-     }
-   }
+    }
+  }
 
-   exports.main = handler
-   ```
-  </details>
+  exports.main = handler
+  ```
 
+  </details><br>
 
 - 访问速度快：`sosf` 使用国内 Severless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
 
@@ -56,7 +57,7 @@
   - [腾讯云开发免费额度 (⚡)](https://cloud.tencent.com/product/tcb)：就速度而言它应该是最快的，缺点是每月有使用量限制 `执行内存(GB) * 执行时间(s)` 为 1000 GBs，云函数公网访问月流量限制为 1 GB，详见 [免费额度](https://cloud.tencent.com/document/product/876/39095)。如果你觉得服务不错，也可按量付费表示支持
 
   - [Vercel Severless Func (🌸)](https://vercel.com/docs/serverless-functions/introduction)：它是国外服务器，速度不如前两家；不过国内访问速度也不错，不需要备案，免费额度也绝对够用：云函数使用量限制 `执行内存(GB) * 执行时间(h)` 为 100 GB-Hrs，月流量 100 GB, 详见 [Fair Use Policy](https://vercel.com/docs/platform/fair-use-policy)
-  </details>
+  </details><br>
 
 - 遵守[合理使用](https://vercel.com/docs/platform/fair-use-policy)规范：在我们使用这些云服务商表示支持的同时，也要~~优雅薅羊毛~~合理使用
 
@@ -80,17 +81,17 @@
 
 #### 云平台配置并部署
 
-> 请在以下三种平台中任选其一: **云开发部署最方便、leancloud 限制少速度快，vercel 限制最少**
+> 请在以下三种平台中任选其一: **云开发部署最方便(云开发版本无需数据库便可储存 access_token, 借力于 [`tcb-conf`](https://github.com/beetcb/tcb-conf) 项目)、leancloud 限制少速度快，vercel 限制最少**
 
 ##### 一. 腾讯云开发 tcb
 
-0. 点击此按钮一键部署：<br>
+> **未开通云开发&新注册用户**需要先开通云开发，具体过程为：在 [此地址](https://console.cloud.tencent.com/tcb?from=12335) 注册登录，完成后再进入 [开通地址](https://console.cloud.tencent.com/tcb?from=12335) 开通 ⇢ <span><input type="checkbox" disabled>不创建环境(请勾选)</span>，其它默认 ⇢ 跳转到授权界面并授权，开通成功 0. 点击此按钮一键部署：<br>
 
-   [![](https://main.qcloudimg.com/raw/67f5a389f1ac6f3b4d04c7256438e44f.svg)](https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=https%3A%2F%2Fgithub.com%2Fbeetcb%2Fsosf&branch=tcb-scf)
+[![](https://main.qcloudimg.com/raw/67f5a389f1ac6f3b4d04c7256438e44f.svg)](https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=https%3A%2F%2Fgithub.com%2Fbeetcb%2Fsosf&branch=tcb-scf)
 
-   - [ ] 使用免费资源(记得勾选)
+- [ ] 使用免费资源(记得勾选)
 
-   **注意**：直接部署计费模式为**按量计费**，如果你需要使用包月类型的免费额度，请首先进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费，当然如果你觉得服务不错，请付费表示支持) ⇢ 然后点击**部署按钮**，选择已有环境为刚刚创建的环境
+**注意**：直接部署计费模式为**按量计费**，如果你需要使用包月类型的免费额度，请首先进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费，当然如果你觉得服务不错，请付费表示支持) ⇢ 然后点击**部署按钮**，选择已有环境为刚刚创建的环境
 
 1. 本地获取机密环境变量：
 
@@ -105,9 +106,7 @@
 
    ![.env](https://i.imgur.com/iTGXe8I.png)
 
-2. 进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 编辑环境变量 ⇢ 将本地 `.env` 文件里的 key-value 依次填入环境变量并保存。，类似下图：
-
-   ![](https://sosf.beetcb.com/?path=/postimg/22/env-console.png)
+2. 进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 在线代码编辑器 ⇢ 将本地 `.env` 文件里的内容粘贴到在线编辑的 `.env` 文件中并保存，然后点击测试来自动配置环境变量，无报错则配置成功
 
 3. 到此，应该部署成功了，如需自定义域名，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)。访问示例：`https://domain.com/path/to/file.md`
 
