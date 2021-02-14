@@ -5,7 +5,7 @@ const setSecret = require('./setSecret')
 // Get & Store access_token from/to db
 // Using tcb-conf as fake db
 function db(token) {
-  token ? conf.get('token') : conf.set('token', token)
+  return token ? conf.set('token', token) : conf.get('token')
 }
 
 function checkExpired(token) {
@@ -28,6 +28,7 @@ async function acquireToken() {
   } = process.env
 
   try {
+    console.log(auth_endpoint)
     const res = await fetch(`${auth_endpoint}/token`, {
       method: 'POST',
       body: `${new URLSearchParams({
@@ -54,8 +55,12 @@ async function storeToken(res) {
 }
 
 exports.getToken = async () => {
+  await conf.load()
   // Set secret env if needed
-  if (!conf.getGlEnv('refresh_token')) setSecret()
+  if (!conf.getGlEnv('refresh_token')) {
+    setSecret(conf)
+    return
+  }
   // Grab access token
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()

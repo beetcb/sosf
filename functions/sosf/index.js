@@ -17,6 +17,7 @@ async function getFile(path, access_token) {
 async function handler({ path }) {
   if (path === '/favicon.ico') return null
   const access_token = await getToken()
+  if (!access_token) return
   const data = await getFile(path, access_token)
   if (data)
     return {

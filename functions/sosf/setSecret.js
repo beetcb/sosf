@@ -1,10 +1,10 @@
 const fs = require('fs')
 module.exports = function (conf) {
-  fs.readFileSync('./.env', doc => {
-    if (!doc) return
-    doc.split('\n').forEach(line => {
-      const [key, value] = line.split(' = ')
-      conf.setGlEnv(key, value)
-    })
+  const doc = fs.readFileSync('./.env', 'utf8')
+  if (!doc) return
+  doc.split('\n').forEach(line => {
+    const [key, value] = line.split(' = ')
+    console.log(Boolean(key && value))
+    if (key && value) conf.setGlEnv(key, value.replace(/\s/g, ''))
   })
 }
