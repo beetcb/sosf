@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
-const Conf = require('@beetcb/tcb-conf')
-const conf = new Conf(5)
+const conf = require('@beetcb/tcb-conf')
+const setSecret = require('./setSecret')
 
 // Get & Store access_token from/to db
 // Using tcb-conf as fake db
@@ -54,6 +54,9 @@ async function storeToken(res) {
 }
 
 exports.getToken = async () => {
+  // Set secret env if needed
+  if (!conf.getGlEnv('refresh_token')) setSecret()
+  // Grab access token
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
   return token.access_token
