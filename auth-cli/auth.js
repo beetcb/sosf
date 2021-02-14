@@ -69,7 +69,7 @@ async function init() {
 
   const auth_endpoint = `${
     account_type
-      ? 'login.microsoftonline.com'
+      ? 'https://login.microsoftonline.com'
       : 'https://login.partner.microsoftonline.cn'
   }/common/oauth2/v2.0`
 
