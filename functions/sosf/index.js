@@ -1,9 +1,12 @@
 const fetch = require('node-fetch')
 const { getToken, drive_api } = require('./api')
+const base_dir = process.env.base_dir
 
 async function getFile(path, access_token) {
   const res = await fetch(
-    `${drive_api}/root:${path}?select=%40microsoft.graph.downloadUrl,name,size,file`,
+    `${drive_api}/root:${encodeURI(
+      base_dir ? base_dir + path : path
+    )}?select=@microsoft.graph.downloadUrl`,
     {
       headers: {
         Authorization: `bearer ${access_token}`,
