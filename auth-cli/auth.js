@@ -2,6 +2,7 @@ const { prompt } = require('inquirer')
 const { EOL } = require('os')
 const { writeFileSync } = require('fs')
 const fetch = require('node-fetch')
+const path = require('path')
 
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',
@@ -42,6 +43,11 @@ async function init() {
     },
     {
       type: 'input',
+      name: 'base_dir',
+      message: '请输入部署目录(如 /path/public, 留空表示部署网盘根目录):\n',
+    },
+    {
+      type: 'input',
       name: 'client_id',
       message: 'client_id:',
     },
@@ -65,6 +71,7 @@ async function init() {
     deploy_type,
     account_type,
     redirect_uri,
+    base_dir,
   } = res
 
   const auth_endpoint = `${
@@ -97,6 +104,7 @@ async function init() {
     client_secret,
     redirect_uri,
     auth_endpoint,
+    base_dir,
   }
 
   return credentials
@@ -188,10 +196,10 @@ function delKey(credentials) {
   await getDriveApi(credentials)
   delKey(credentials)
   writeFileSync(
-    '../.env',
+    path.resolve('./.env'),
     Object.keys(credentials).reduce((env, e) => {
       return `${env}${e} = ${credentials[e]}${EOL}`
     }, '')
   )
-  console.warn('环境变量已自动配置 🎉')
+  console.warn('环境变量已自动配置 🎉, 文件已保存至 ./.env')
 })()
