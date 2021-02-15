@@ -10,3 +10,5 @@ start.sh
 
 .env
 package-lock.json
+
+.vercel/
