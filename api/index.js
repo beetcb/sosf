@@ -3,7 +3,7 @@ const { getToken, drive_api } = require('./api')
 
 async function getFile(path, access_token) {
   const res = await fetch(
-    `${drive_api}/root:${path}?select=%40microsoft.graph.downloadUrl,name,size,file`,
+    `${drive_api}/root:${encodeURI(path)}?select=@microsoft.graph.downloadUrl`,
     {
       headers: {
         Authorization: `bearer ${access_token}`,
@@ -23,7 +23,6 @@ async function handler(req, res) {
   } else {
     const access_token = await getToken()
     const data = await getFile(path, access_token)
-
     if (data) res.redirect(data['@microsoft.graph.downloadUrl'])
     else res.send('Resource not found')
   }
