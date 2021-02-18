@@ -1,7 +1,7 @@
 {
   "name": "sosf",
   "version": "1.0.0",
-  "description": "severless onedrive & sharepoint function",
+  "description": "serverless onedrive & sharepoint function",
   "main": "index.js",
   "scripts": {
     "auth": "node auth-cli/auth.js"

@@ -1,6 +1,6 @@
 ### sosf
 
-**S**everless **O**neDrive & **S**harePoint **F**unction.
+**S**erverless **O**neDrive & **S**harePoint **F**unction.
 
 或许是**国内**访问最快的 OneDrive **免服务器**图床程序(或视频床、音乐床、...床)，专为**世纪互联**用户打造
 
@@ -41,7 +41,7 @@
 
   </details>
 
-- 访问速度快：`sosf` 使用国内 Severless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
+- 访问速度快：`sosf` 使用国内 Serverless 供应商提供的免费服务(一般带有 CDN)，访问国内的世纪互联，速度自然有质的飞跃
 
 - CLI 配置，简单快速：微软 Graph 的授权过程比较麻烦，为此我提供了一个 cli 工具来加快部署。用户填入所有的配置项后，该工具自动写入配置文件，无需多余操作
 
@@ -56,7 +56,7 @@
 
   - [腾讯云开发免费额度 (⚡)](https://cloud.tencent.com/product/tcb)：就速度而言它应该是最快的，缺点是每月有使用量限制 `执行内存(GB) * 执行时间(s)` 为 1000 GBs，云函数公网访问月流量限制为 1 GB，详见 [免费额度](https://cloud.tencent.com/document/product/876/39095)。如果你觉得服务不错，也可按量付费表示支持
 
-  - [Vercel Severless Func (🌸)](https://vercel.com/docs/serverless-functions/introduction)：它是国外服务器，速度不如前两家；不过国内访问速度也不错，不需要备案，免费额度也绝对够用：云函数使用量限制 `执行内存(GB) * 执行时间(h)` 为 100 GB-Hrs，月流量 100 GB, 详见 [Fair Use Policy](https://vercel.com/docs/platform/fair-use-policy)
+  - [Vercel Serverless Func (🌸)](https://vercel.com/docs/serverless-functions/introduction)：它是国外服务器，速度不如前两家；不过国内访问速度也不错，不需要备案，免费额度也绝对够用：云函数使用量限制 `执行内存(GB) * 执行时间(h)` 为 100 GB-Hrs，月流量 100 GB, 详见 [Fair Use Policy](https://vercel.com/docs/platform/fair-use-policy)
   </details>
 
 - 遵守[合理使用](https://vercel.com/docs/platform/fair-use-policy)规范：在我们使用这些云服务商表示支持的同时，也要~~优雅薅羊毛~~合理使用
@@ -170,7 +170,7 @@ npm run auth
    dbId = 6017e9d1d037116a8d1c4ad5
    ```
 
-   这一步是为了持久保存访问 graph 的 `access-token`，因为 severless function 是无状态的
+   这一步是为了持久保存访问 graph 的 `access-token`，因为 serverless function 是无状态的
 
    此时 `.env` 状态大概是这样：
 
@@ -191,7 +191,7 @@ npm run auth
 
 6. 访问地址示例：`https://your.app/path/to/file.md`
 
-##### 三. Vercel Severless Func
+##### 三. Vercel Serverless Func
 
 0. 配置机密型环境变量：
 
@@ -212,7 +212,7 @@ npm run auth
    AppKey = IkoR0JGItmcYnyAsqoySF7Fc
    ```
 
-   同样，dbId 是为了持久保存访问 graph 的 `access-token`，因为 severless function 是无状态的。而且由于我们在 vercel 里面访问 leancloud 的数据库，需要额外的验证值(AppID AppKey)
+   同样，dbId 是为了持久保存访问 graph 的 `access-token`，因为 serverless function 是无状态的。而且由于我们在 vercel 里面访问 leancloud 的数据库，需要额外的验证值(AppID AppKey)
 
 4. 安装 vercel cli 并登录：
 
