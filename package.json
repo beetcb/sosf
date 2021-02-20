@@ -9,7 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^7.3.3",
+    "@beetcb/sstore": "^0.0.2",
+    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "inquirer": "7.3.3"
   }
 }
