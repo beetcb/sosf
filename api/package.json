@@ -11,6 +11,6 @@
   "dependencies": {
     "node-fetch": "^2.6.1",
     "dotenv": "^8.2.0",
-    "@beetcb/sstore": "^0.0.1"
+    "@beetcb/sstore": "^0.0.2"
   }
 }
