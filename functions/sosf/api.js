@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const sstore = require('@beetcb/sstore')
-const setSecret = require('./setSecret')
+require('dotenv').config()
 
 // Get & Store access_token from/to db
 // Using tcb-sstore as fake db
@@ -56,11 +56,6 @@ async function storeToken(res) {
 
 exports.getToken = async () => {
   await sstore.load()
-  // Set secret env if needed
-  if (!sstore.getGlEnv('refresh_token')) {
-    setSecret(sstore)
-    return
-  }
   // Grab access token
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()

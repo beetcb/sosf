@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "@beetcb/sstore": "^0.0.2"
+    "@beetcb/sstore": "^0.0.2",
+    "dotenv": "^8.2.0"
   }
 }
