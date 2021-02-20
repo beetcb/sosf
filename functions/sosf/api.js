@@ -1,18 +1,19 @@
 const fetch = require('node-fetch')
-const AV = require('leanengine')
+const Conf = require('conf')
 require('dotenv').config()
-
-AV.init({
-  appId: process.env.LEANCLOUD_APP_ID,
-  appKey: process.env.LEANCLOUD_APP_KEY,
-  masterKey: process.env.LEANCLOUD_APP_MASTER_KEY,
-})
-AV.Cloud.useMasterKey()
-const dbId = process.env.dbId
+// Reset $XDG_CONFIG_HOME
+process.env.XDG_CONFIG_HOME = '/tmp'
+const conf = new Conf()
 
 const timestamp = () => (Date.now() / 1000) | 0
 const headers = {
   'content-type': 'application/x-www-form-urlencoded',
+}
+
+// Get & Store access_token from/to db
+// Using tcb-conf as fake db
+function db(token) {
+  return token ? conf.set('token', token) : conf.get('token')
 }
 
 async function acquireToken() {
@@ -57,14 +58,9 @@ function checkExpired(token) {
 }
 
 exports.getToken = async () => {
-  const query = new AV.Query('sosf')
-  const db = await query.get(dbId)
-  let token = db.get('token')
-  if (token) {
-    if (checkExpired(token)) token = await acquireToken()
-  } else {
-    token = await acquireToken()
-  }
+  // Grab access token
+  let token = db()
+  if (!token || checkExpired(token)) token = await acquireToken()
   return token.access_token
 }
 
