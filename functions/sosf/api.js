@@ -1,6 +1,10 @@
 const fetch = require('node-fetch')
-const conf = require('@beetcb/tcb-conf')
+const Conf = require('conf')
 const setSecret = require('./setSecret')
+
+// Reset $XDG_CONFIG_HOME
+process.env.XDG_CONFIG_HOME = '/tmp'
+const conf = new Conf()
 
 // Get & Store access_token from/to db
 // Using tcb-conf as fake db
