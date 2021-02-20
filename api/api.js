@@ -1,5 +1,10 @@
 const fetch = require('node-fetch')
+const Conf = require('conf')
 require('dotenv').config()
+
+// Reset $XDG_CONFIG_HOME
+process.env.XDG_CONFIG_HOME = '/tmp'
+const conf = new Conf()
 
 const timestamp = () => (Date.now() / 1000) | 0
 
@@ -39,51 +44,21 @@ async function acquireToken() {
   }
 }
 
-// Get or Update the token stored in the leancloud
-async function db(token) {
-  const { AppID, AppKey, dbId } = process.env
-  const dbEndpoint = `https://${AppID.slice(
-    0,
-    8
-  )}.api.lncldglobal.com/1.1/classes/sosf/${dbId}`
-  const headers = {
-    'X-LC-Id': AppID,
-    'X-LC-Key': AppKey,
-    'Content-Type': 'application/json',
-  }
-
-  if (!token) {
-    const res = await fetch(dbEndpoint, {
-      headers,
-    })
-    if (res.ok) {
-      console.log('Get token form database')
-      return (await res.json()).token
-    }
-  } else {
-    const res = await fetch(dbEndpoint, {
-      headers,
-      body: JSON.stringify({ token }),
-      method: 'PUT',
-    })
-    if (res.ok) {
-      console.warn('Token stored to database')
-    } else {
-      console.error(res.statusText)
-    }
-    return token
-  }
+// Get & Store access_token from/to db
+// Using tcb-conf as fake db
+function db(token) {
+  return token ? conf.set('token', token) : conf.get('token')
 }
 
 async function storeToken(res) {
   const { expires_in, access_token, refresh_token } = await res.json()
   const expires_at = timestamp() + expires_in
   const token = { expires_at, access_token, refresh_token }
-  return await db(token)
+  return db(token)
 }
 
 exports.getToken = async () => {
-  let token = await db()
+  let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
   return token.access_token
 }
