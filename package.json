@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "leancloud-storage": "^4.10.0",
+    "@beetcb/sstore": "^0.0.1",
     "leanengine": "^3.7.0",
-    "inquirer": "^7.3.3",
     "node-fetch": "^2.6.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "inquirer": "^7.3.3"
+  },
   "engines": {
     "node": "12.x"
   }
