@@ -1,10 +1,6 @@
 const fetch = require('node-fetch')
-const Conf = require('conf')
+const sstore = require('@beetcb/sstore')
 require('dotenv').config()
-
-// Reset $XDG_CONFIG_HOME
-process.env.XDG_CONFIG_HOME = '/tmp'
-const conf = new Conf()
 
 const timestamp = () => (Date.now() / 1000) | 0
 
@@ -45,9 +41,9 @@ async function acquireToken() {
 }
 
 // Get & Store access_token from/to db
-// Using tcb-conf as fake db
+// Using sstore as fake db
 function db(token) {
-  return token ? conf.set('token', token) : conf.get('token')
+  return token ? sstore.set('token', token) : sstore.get('token')
 }
 
 async function storeToken(res) {
