@@ -1,15 +1,11 @@
 const fetch = require('node-fetch')
-const Conf = require('conf')
+const sstore = require('@beetcb/sstore')
 const setSecret = require('./setSecret')
 
-// Reset $XDG_CONFIG_HOME
-process.env.XDG_CONFIG_HOME = '/tmp'
-const conf = new Conf()
-
 // Get & Store access_token from/to db
-// Using tcb-conf as fake db
+// Using tcb-sstore as fake db
 function db(token) {
-  return token ? conf.set('token', token) : conf.get('token')
+  return token ? sstore.set('token', token) : sstore.get('token')
 }
 
 function checkExpired(token) {
@@ -59,10 +55,10 @@ async function storeToken(res) {
 }
 
 exports.getToken = async () => {
-  await conf.load()
+  await sstore.load()
   // Set secret env if needed
-  if (!conf.getGlEnv('refresh_token')) {
-    setSecret(conf)
+  if (!sstore.getGlEnv('refresh_token')) {
+    setSecret(sstore)
     return
   }
   // Grab access token

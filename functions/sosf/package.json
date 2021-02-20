@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "conf": "^9.0.2"
+    "@beetcb/sstore": "^0.0.1"
   }
 }
