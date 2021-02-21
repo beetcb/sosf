@@ -37,11 +37,8 @@ async function storeToken(res) {
   const { expires_in, access_token, refresh_token } = await res.json()
   const expires_at = timestamp() + expires_in
   const token = { expires_at, access_token, refresh_token }
-  const db = AV.Object.createWithoutData('sosf', dbId)
-  db.set('token', token)
+  db(token)
   console.warn('Updating stored token')
-  // Async it cause we can
-  db.save()
   return token
 }
 
@@ -55,6 +52,7 @@ function checkExpired(token) {
 }
 
 exports.getToken = async () => {
+  await sstore.load()
   // Grab access token
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
