@@ -54,9 +54,9 @@ async function storeToken(res) {
 }
 
 exports.getToken = async () => {
-  await sstore.load()
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
+  sstore.close()
   return token.access_token
 }
 
