@@ -196,7 +196,7 @@ function delKey(credentials) {
   await getDriveApi(credentials)
   delKey(credentials)
   writeFileSync(
-    path.resolve('./.env'),
+    path.resolve('./functions/sosf/.env'),
     Object.keys(credentials).reduce((env, e) => {
       return `${env}${e} = ${credentials[e]}${EOL}`
     }, '')
