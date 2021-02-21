@@ -56,6 +56,7 @@ async function storeToken(res) {
 exports.getToken = async () => {
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
+  else console.log('Grab token from sstore!')
   sstore.close()
   return token.access_token
 }
