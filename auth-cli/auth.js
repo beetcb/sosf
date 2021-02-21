@@ -175,10 +175,10 @@ function delKey(credentials) {
   await getDriveApi(credentials)
   delKey(credentials)
   writeFileSync(
-    path.resolve('./.env'),
+    path.resolve('./functions/sosf/.env'),
     Object.keys(credentials).reduce((env, e) => {
       return `${env}${e} = ${credentials[e]}${EOL}`
     }, '')
   )
-  console.warn('环境变量已自动配置 🎉, 文件已保存至 ./.env')
+  console.warn('环境变量已自动配置 🎉, 文件已保存至 ./functions/sosf/.env')
 })()
