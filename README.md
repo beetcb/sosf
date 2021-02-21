@@ -93,14 +93,20 @@
 
 - [ ] 使用免费资源(记得勾选)
 
-**注意**：直接部署计费模式为**按量计费** + 免费额度，如果你需要使用包月类型的免费额度，请参考手动部署教程： <details><summary>点击展开手动部署教程</summary> 0. 配置机密环境变量：
+**注意**：直接部署计费模式为**按量计费** + 免费额度，如果你需要使用包月类型的免费额度，请参考手动部署教程： <details><summary>点击展开手动部署教程</summary>
 
-```bash
-git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
-npm i
-npm run auth
-# 在此根据提示开始配置
-```
+0.  配置机密环境变量：
+
+    ```bash
+    git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
+    npm i
+    npm run auth
+    # 在此根据提示开始配置
+    ```
+
+    配置完成后，sosf 会创建一个 `.env` 文件，内容大致如下：
+
+    ![.env](https://i.imgur.com/iTGXe8I.png)
 
 1.  进入云开发[控制台](https://console.cloud.tencent.com/tcb) ⇢ 空模板 ⇢ 确保选择计费方式`包年包月`, 套餐版本`免费版`(这样能够确保免费额度超出后不继续扣费，当然如果你觉得服务不错，请付费表示支持) ⇢ 进入控制台
 
@@ -124,7 +130,9 @@ npm run auth
     ```
 5.  等待几分钟，就可以开始预览了，访问示例：`https://your.app/path/to/file.md`
 
-6.  本地获取机密环境变量：
+</details>
+
+0.  本地获取机密环境变量：
 
     ```bash
     git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
@@ -137,20 +145,9 @@ npm run auth
 
     ![.env](https://i.imgur.com/iTGXe8I.png)
 
-</details>
+1.  进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 在线代码编辑器 ⇢ 将本地 `.env` 文件里的内容粘贴到在线编辑的 `.env` 文件中并保存，然后点击测试，无报错则配置成功
 
-0. 配置机密环境变量：
-
-   ```bash
-   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd sosf
-   npm i
-   npm run auth
-   # 在此根据提示开始配置
-   ```
-
-1. 进入刚刚创建的环境 ⇢ 左栏云函数 ⇢ 在线代码编辑器 ⇢ 将本地 `.env` 文件里的内容粘贴到在线编辑的 `.env` 文件中并保存，然后点击测试，无报错则配置成功
-
-2. 到此，应该部署成功了，如需自定义域名，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)。访问示例：`https://domain.com/path/to/file.md`
+2.  到此，应该部署成功了，如需自定义域名，请配置 [HTTP 访问服务](https://console.cloud.tencent.com/tcb/env/access?rid=4)。访问示例：`https://domain.com/path/to/file.md`
 
 ##### 二. Leancloud 云引擎
 
@@ -164,10 +161,6 @@ npm run auth
    npm run auth
    # 在此根据提示开始配置
    ```
-
-配置完成后，sosf 会创建一个 `.env` 文件，内容大致如下：
-
-![.env](https://i.imgur.com/iTGXe8I.png)
 
 1. 注册 Leancloud 开发板并进入控制台
 
@@ -199,14 +192,14 @@ npm run auth
    # 在此根据提示开始配置
    ```
 
-4. 安装 vercel cli 并登录：
+1. 安装 vercel cli 并登录：
 
    ```bash
    npm i -g vercel
    vercel login
    ```
 
-5. 部署：
+2. 部署：
 
    ```bash
    vercel --prod
@@ -215,7 +208,7 @@ npm run auth
 
    到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
 
-6. 访问地址示例：`https://your.app/?path=/path/to/file.md`
+3. 访问地址示例：`https://your.app/?path=/path/to/file.md`
 
 ### 作者
 
