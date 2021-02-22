@@ -56,7 +56,21 @@ exports.getToken = async () => {
   let token = db()
   if (!token || checkExpired(token)) token = await acquireToken()
   else console.log('Grab token from sstore!')
+  sstore.close()
   return token.access_token
+}
+exports.getFile = async (path, access_token) => {
+  const base_dir = process.env.base_dir
+  const res = await fetch(
+    `${process.env.drive_api}/root:${encodeURI(base_dir ? base_dir + path : path)}?select=@microsoft.graph.downloadUrl`,
+    {
+      headers: {
+        Authorization: `bearer ${access_token}`,
+      },
+    }
+  )
+  if (res.ok) return await res.json()
+  else console.error(`bad request to path: ${path}`)
 }
 
 exports.drive_api = process.env.drive_api
