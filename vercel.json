@@ -2,7 +2,8 @@
   "functions": {
     "api/index.js": {
       "memory": 128,
-      "maxDuration": 10
+      "maxDuration": 10,
+      "includeFiles": "/tmp/conf/*"
     }
   },
   "cleanUrls": true,
@@ -18,5 +19,10 @@
       ]
     }
   ],
-  "rewrites": [{ "source": "/", "destination": "/api/index" }]
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/index"
+    }
+  ]
 }
