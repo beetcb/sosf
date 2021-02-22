@@ -1,4 +1,3 @@
-const fetch = require('node-fetch')
 const { getToken, getFile } = require('./api')
 
 async function handler({ path }) {
