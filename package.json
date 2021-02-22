@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "conf": "^9.0.2",
     "inquirer": "^7.3.3",
     "node-fetch": "^2.6.1"
   }
