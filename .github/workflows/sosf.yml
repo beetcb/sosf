@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: sosf deploy
+    env:
+      dotenv: ${{secrets.dotenv}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create dotenv file
+        run: echo $dotenv > ${{ github.action_path }}/functions/sosf/.env
+
+      - name: Deploy to Tencent CloudBase
+        uses: TencentCloudBase/cloudbase-action@v2
+        with:
+          secretId: ${{secrets.secretId}}
+          secretKey: ${{secrets.secretKey}}
+          envId: ${{secrets.envId}}
