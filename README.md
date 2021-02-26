@@ -220,7 +220,7 @@
 
 ### 鸣谢
 
-- [Tencent ClouBase](https://github.com/TencentCloudBase)
+- [Tencent CloudBase](https://github.com/TencentCloudBase)
 - [LeanCloud](https://github.com/leancloud)
 - [Vercel](https://github.com/vercel/vercel)
 
