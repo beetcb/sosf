@@ -68,11 +68,12 @@ exports.getFile = async (path, access_token) => {
   const res = await fetch(
     `${process.env.drive_api}/root:${encodeURI(
       base_dir ? base_dir + path : path
-    )}?select=@microsoft.graph.downloadUrl`,
+    )}?select=%40microsoft.graph.downloadUrl`,
     {
       headers: {
         Authorization: `bearer ${access_token}`,
       },
+      compress: false,
     }
   )
   if (res.ok) return await res.json()
