@@ -216,14 +216,12 @@
 
 邮箱: `i@beetcb.com`
 
+`sosf` - Licensed under under [MIT](https://github.com/beetcb/sosf/blob/tcb-scf/LICENSE) 
+
 ### 鸣谢
 
-- [Tencent tcb](https://github.com/TencentCloudBase)
+- [Tencent CloudBase](https://github.com/TencentCloudBase)
 - [LeanCloud](https://github.com/leancloud)
 - [Vercel](https://github.com/vercel/vercel)
 
 🌡 注意：受限于国内网络环境，本说明图片可能不能正常显示，或者你想查看部署的效果，请查看 [此篇博文](https://www.beetcb.com/posts/22/)
-
-```
-
-```
