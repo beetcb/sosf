@@ -1,3 +1,5 @@
+name: sosf
+
 on: [push]
 
 jobs:
@@ -5,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: sosf deploy
     env:
-      dotenv: |
+      dotenv: |+
         ${{secrets.dotenv}}
     steps:
       - name: Checkout
