@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     name: sosf deploy
     env:
-      dotenv: |+
+      dotenv: |
         ${{secrets.dotenv}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Create dotenv file
-        run: echo $dotenv > ./functions/sosf/.env
+        run: echo -e "$dotenv" > ./functions/sosf/.env
 
       - name: Deploy to Tencent CloudBase
         uses: TencentCloudBase/cloudbase-action@v2
