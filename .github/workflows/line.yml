@@ -1,0 +1,14 @@
+name: line-test
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: sosf deploy
+    env:
+      test: |
+        ${{secrets.test}}
+    steps:
+      - name: Line count
+        run: echo "$test" | wc -l
