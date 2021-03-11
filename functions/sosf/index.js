@@ -14,8 +14,8 @@ async function handler(req, res) {
       const data = await getFile(pathname, access_token)
 
       if (data) {
-        res.writeHead(302, {
-          Location: data['@microsoft.graph.downloadUrl'],
+        res.writeHead(307, {
+          Location: data['@microsoft.graph.downloadUrl'].slice(6),
         })
         res.end()
       } else res.end('Resource not found')
