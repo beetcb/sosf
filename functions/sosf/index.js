@@ -7,8 +7,9 @@ async function handler({ path }) {
   const data = await getFile(path, access_token)
   if (data)
     return {
-      statusCode: 302,
-      headers: { Location: data['@microsoft.graph.downloadUrl'] },
+      isBase64Encoded: false,
+      statusCode: 307,
+      headers: { Location: data['@microsoft.graph.downloadUrl'].slice(6) },
       body: null,
     }
   else return 'Resource not found'
