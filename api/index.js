@@ -9,7 +9,7 @@ async function handler(req, res) {
   } else {
     const access_token = await getToken()
     const data = await getFile(path, access_token)
-    if (data) res.redirect(data['@microsoft.graph.downloadUrl'])
+    if (data) res.redirect(data['@microsoft.graph.downloadUrl'].slice(6))
     else res.send('Resource not found')
   }
 }
