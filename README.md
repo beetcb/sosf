@@ -6,6 +6,10 @@
 
 > 注：SharePoint 文档储存功能和 OneDrive 网盘类似，本说明将他们统称为 OneDrive。
 
+DEMO:
+
+![](https://git.beetcb.com/?path=/img/corgi.jpg)
+
 ### 特点
 
 - 使用 [`sstore`](https://github.com/beetcb/sstore) 项目缓存 `access_token`，省去复杂的数据库配置和不必要带宽开销
@@ -216,7 +220,7 @@
 
 邮箱: `i@beetcb.com`
 
-`sosf` - Licensed under under [MIT](https://github.com/beetcb/sosf/blob/tcb-scf/LICENSE) 
+`sosf` - Licensed under under [MIT](https://github.com/beetcb/sosf/blob/tcb-scf/LICENSE)
 
 ### 鸣谢
 
