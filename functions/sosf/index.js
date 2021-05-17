@@ -28,24 +28,26 @@ async function handler({ path, queryStringParameters, headers }) {
           <html lang="en">
             <head>
               <link
-                href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+                href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css"
                 rel="stylesheet"
               />
             </head>
             <body>
               <div id="wrapper"></div>
-              <script src="https://unpkg.com/gridjs/dist/gridjs.development.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
               <script>
               new gridjs.Grid(
                 {
-                  columns: ['File/Folder', 'Link'],
+                  columns: ['Resource', 'Link'],
                   search: true,
                   server: {
                     url: \`\$\{location.href\}?type=json&key=${key || ''}\`,
                     then: data => data.map(({name, id}) => {
-                        const item = {[name]: \`\$\{location.href\}?type=json&id=\$\{id\}&key=${
-                          key || ''
-                        }\`}
+                        const item = {
+                          resource: name, 
+                          link: \`\$\{location.href\}?id=\$\{id\}&key=${
+                            key || ''
+                          }\`}
                         return item
                       }
                     )
