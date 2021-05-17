@@ -42,11 +42,12 @@ async function handler({ path, queryStringParameters, headers }) {
               <div id="wrapper"></div>
               <script src="https://unpkg.com/gridjs/dist/gridjs.development.js"></script>
               <script>
-              new gridjs.Grid({
-                columns: ['Name', 'ID'],
-                data: JSON.parse("${JSON.stringify(
-                  itemTable
-                )}")}).render(document.getElementById("wrapper"));
+              new gridjs.Grid(
+                {
+                  columns: ['Name', 'ID'],
+                  data: ${JSON.stringify(itemTable)}
+                }
+                ).render(document.getElementById("wrapper"));
               </script>
             </body>
           </html>
