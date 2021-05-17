@@ -36,7 +36,3 @@ async function handler({ path, queryStringParameters }) {
 }
 
 exports.main = handler
-handler({
-  path: '/',
-  queryStringParameters: {},
-}).then(e=>console.log(e))
