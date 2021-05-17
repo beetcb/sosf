@@ -16,9 +16,10 @@ async function handler({ path, queryStringParameters, headers }) {
         queryStringParameters.id,
         queryStringParameters.key
       )
+      console.log(data)
       if (data) {
         const itemTable = data.value.reduce((arr, ele) => {
-          arr.push({ name: ele.name, id: ele.id })
+          arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
           return arr
         }, [])
         const docType = headers['content-type'] || ''
@@ -70,3 +71,11 @@ async function handler({ path, queryStringParameters, headers }) {
 }
 
 exports.main = handler
+
+handler({
+  path: '/',
+  queryStringParameters: {
+    key: '123',
+  },
+  headers: {},
+}).then((e) => console.log(e))

@@ -111,11 +111,11 @@ exports.listChildren = async (
 
   const graph =
     path === '/'
-      ? listRoot`drive${process.env.drive_api}select${`id,name`}`
+      ? listRoot`drive${process.env.drive_api}select${`id,name,file`}`
       : listChildren`drive${process.env.drive_api}id${item_id}path${[
           base_dir,
           path,
-        ]}select${`id,name`}`
+        ]}select${`id,name,file`}`
 
   const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {
