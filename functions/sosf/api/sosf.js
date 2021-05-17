@@ -1,5 +1,8 @@
 const fetch = require('node-fetch')
 const sstore = require('@beetcb/sstore')
+
+const { getItem, listChildren, listRoot } = require('./graph/endpoint')
+
 require('dotenv').config()
 
 // Get & Store access_token from/to db
@@ -8,7 +11,7 @@ function db(token) {
   return token ? sstore.set('token', token) : sstore.get('token')
 }
 
-function checkExpired(token) {
+const checkExpired = (token) => {
   const { expires_at } = token
   if (timestamp() > expires_at) {
     console.log('Token expired')
@@ -17,6 +20,16 @@ function checkExpired(token) {
 }
 
 const timestamp = () => (Date.now() / 1000) | 0
+
+const getFetchOpts = (a_t) => {
+  const opts = {
+    headers: {
+      Authorization: `bearer ${a_t}`,
+    },
+    compress: false,
+  }
+  return opts
+}
 
 async function acquireToken() {
   const {
@@ -63,19 +76,17 @@ exports.getToken = async () => {
   return token.access_token
 }
 
-exports.getFile = async (path, access_token) => {
-  const base_dir = process.env.base_dir
-  const res = await fetch(
-    `${process.env.drive_api}/root:${encodeURI(
-      base_dir ? base_dir + path : path
-    )}?select=%40microsoft.graph.downloadUrl`,
-    {
-      headers: {
-        Authorization: `bearer ${access_token}`,
-      },
-      compress: false,
-    }
-  )
+exports.getItem = async (path, access_token, item_id) => {
+  const base_dir = process.env.base_dir || ''
+  item_id = item_id || ''
+
+  const graph = listChildren`drive${process.env.drive_api}id${item_id}path${[
+    base_dir,
+    path,
+  ]}select${`id,name`}`
+  console.log(graph)
+
+  const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {
     return await res.json()
   } else {
@@ -86,36 +97,21 @@ exports.getFile = async (path, access_token) => {
 
 exports.listChildren = async (path, access_token, item_id) => {
   const base_dir = process.env.base_dir || ''
-  const apiPath = `/root${
-    path === '/' ? '' : `:${encodeURI(base_dir + path).slice(0, -1)}:/`
-  }children`
-  console.log(`${process.env.drive_api}${apiPath}`)
-  const fetchOps = {
-    headers: {
-      Authorization: `bearer ${access_token}`,
-    },
-    compress: false,
-  }
+  item_id = item_id || ''
 
-  if (!path && item_id) {
-    const res = await fetch(
-      `${process.env.drive_api}/items/${item_id}/children?$select=id`,
-      fetchOps
-    )
-    if (res.ok) {
-      return await res.json()
-    } else {
-      console.error(res.statusText)
-      return null
-    }
+  const graph = listChildren`drive${process.env.drive_api}id${item_id}path${[
+    base_dir,
+    path,
+  ]}select${`id,name`}`
+
+  console.log(graph)
+
+  const res = await fetch(graph, getFetchOpts(access_token))
+  if (res.ok) {
+    return await res.json()
   } else {
-    const res = await fetch(`${process.env.drive_api}${apiPath}?$select=id,name`, fetchOps)
-    if (res.ok) {
-      return await res.json()
-    } else {
-      console.error(res.statusText)
-      return null
-    }
+    console.error(res.statusText)
+    return null
   }
 }
 

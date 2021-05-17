@@ -6,6 +6,11 @@
   "scripts": {
     "auth": "node auth-cli/auth.js"
   },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 80
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

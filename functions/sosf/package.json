@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "^2.6.1",
     "@beetcb/sstore": "^0.1.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1"
   }
 }
