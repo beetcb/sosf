@@ -6,17 +6,18 @@ async function handler({ path, queryStringParameters, headers }) {
   }
 
   const access_token = await getToken()
-  const { id, key } = queryStringParameters
+  const { id, key, type } = queryStringParameters
 
   if (!access_token) {
     return null
   } else {
     if (path.endsWith('/')) {
-      const isJson =
-        headers['content-type'] && headers['content-type'].includes('json')
-      const data = await listChildren(path, access_token, id, key)
+      const isReturnJson =
+        type === 'json' ||
+        (headers['content-type'] && headers['content-type'].includes('json'))
+
       // Render html first
-      if (!isJson) {
+      if (!isReturnJson) {
         return {
           isBase64Encoded: false,
           statusCode: 200,
@@ -40,9 +41,11 @@ async function handler({ path, queryStringParameters, headers }) {
                   columns: ['File/Folder', 'Link'],
                   search: true,
                   server: {
-                    url: \`\$\{location.href\}/?key=${key}\`,
+                    url: \`\$\{location.href\}?type=json&key=${key || ''}\`,
                     then: data => data.map(({name, id}) => {
-                        const item = {[name]: 'location.origin/?key=' + id}
+                        const item = {[name]: \`\$\{location.href\}?type=json&id=\$\{id\}&key=${
+                          key || ''
+                        }\`}
                         return item
                       }
                     )
