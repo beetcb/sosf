@@ -80,11 +80,10 @@ exports.getItem = async (path, access_token, item_id) => {
   const base_dir = process.env.base_dir || ''
   item_id = item_id || ''
 
-  const graph = listChildren`drive${process.env.drive_api}id${item_id}path${[
+  const graph = getItem`drive${process.env.drive_api}id${item_id}path${[
     base_dir,
     path,
-  ]}select${`id,name`}`
-  console.log(graph)
+  ]}select${`@microsoft.graph.downloadUrl`}`
 
   const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {
@@ -99,12 +98,13 @@ exports.listChildren = async (path, access_token, item_id) => {
   const base_dir = process.env.base_dir || ''
   item_id = item_id || ''
 
-  const graph = listChildren`drive${process.env.drive_api}id${item_id}path${[
-    base_dir,
-    path,
-  ]}select${`id,name`}`
-
-  console.log(graph)
+  const graph =
+    path === '/'
+      ? listRoot`drive${process.env.drive_api}select${`id,name`}`
+      : listChildren`drive${process.env.drive_api}id${item_id}path${[
+          base_dir,
+          path,
+        ]}select${`id,name`}`
 
   const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {

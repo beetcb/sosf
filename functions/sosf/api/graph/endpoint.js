@@ -14,7 +14,7 @@ exports.getItem = (strs, ...parmas) => {
   if (id) {
     return `${drive}/items/${id}?$select=${select}`
   } else {
-    return `${drive}/root:${join(path)}?$select=${select}`
+    return `${drive}/root:${join(...path)}?$select=${select}`
   }
 }
 
@@ -23,11 +23,14 @@ exports.listChildren = (strs, ...parmas) => {
   if (id) {
     return `${drive}/items/${id}`
   } else {
-    return `${drive}/root:${join(path)}:/children?$select=${select}`
+    return `${drive}/root:${join(...path).slice(
+      0,
+      -1
+    )}:/children?$select=${select}`
   }
 }
 
 exports.listRoot = (strs, ...parmas) => {
-  const [drive, _, _, select] = parseStrs(strs, parmas)
+  const [drive, _, __, select] = parseStrs(strs, parmas)
   return `${drive}/root/children?$select=${select}`
 }

@@ -1,4 +1,4 @@
-const { getToken, getFile, listChildren } = require('./api')
+const { getToken, getItem, listChildren } = require('./api/sosf')
 
 async function handler({ path, queryStringParameters }) {
   if (path === '/favicon.ico') {
@@ -22,7 +22,7 @@ async function handler({ path, queryStringParameters }) {
         }, {})
       }
     } else {
-      const data = await getFile(path, access_token)
+      const data = await getItem(path, access_token)
       if (data)
         return {
           isBase64Encoded: false,
@@ -36,3 +36,7 @@ async function handler({ path, queryStringParameters }) {
 }
 
 exports.main = handler
+handler({
+  path: '/',
+  queryStringParameters: {},
+}).then(e=>console.log(e))
