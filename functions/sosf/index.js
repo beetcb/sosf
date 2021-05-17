@@ -12,7 +12,8 @@ async function handler({ path, queryStringParameters, headers }) {
     return null
   } else {
     if (path.endsWith('/')) {
-      const isJson = headers['content-type'].includes('json')
+      const isJson =
+        headers['content-type'] && headers['content-type'].includes('json')
       const data = await listChildren(path, access_token, id, key)
       // Render html first
       if (!isJson) {
@@ -36,11 +37,15 @@ async function handler({ path, queryStringParameters, headers }) {
               <script>
               new gridjs.Grid(
                 {
-                  columns: ['Name', 'ID'],
+                  columns: ['File/Folder', 'Link'],
                   search: true,
                   server: {
-                    url: '\`\$\{location.href\}\`/?key=${key}',
-                    then: data => data
+                    url: \`\$\{location.href\}/?key=${key}\`,
+                    then: data => data.map(({name, id}) => {
+                        const item = {[name]: 'location.origin/?key=' + id}
+                        return item
+                      }
+                    )
                   },
                 }
                 ).render(document.getElementById("wrapper"));
@@ -50,20 +55,22 @@ async function handler({ path, queryStringParameters, headers }) {
           
           `,
         }
-      }
-      if (data) {
-        const itemTable = data.value.reduce((arr, ele) => {
-          arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
-          return arr
-        }, [])
+      } else {
+        const data = await listChildren(path, access_token, id, key)
+        if (data) {
+          const itemTable = data.value.reduce((arr, ele) => {
+            arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
+            return arr
+          }, [])
 
-        return {
-          isBase64Encoded: false,
-          statusCode: 200,
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: null,
+          return {
+            isBase64Encoded: false,
+            statusCode: 200,
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: itemTable,
+          }
         }
       }
     } else {
@@ -81,13 +88,3 @@ async function handler({ path, queryStringParameters, headers }) {
 }
 
 exports.main = handler
-
-handler({
-  path: '/',
-  queryStringParameters: {
-    key: '123',
-  },
-  headers: {
-    'content-type': 'json',
-  },
-}).then((e) => console.log(e))
