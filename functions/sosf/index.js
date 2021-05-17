@@ -6,32 +6,23 @@ async function handler({ path, queryStringParameters, headers }) {
   }
 
   const access_token = await getToken()
+  const { id, key } = queryStringParameters
+
   if (!access_token) {
     return null
   } else {
     if (path.endsWith('/')) {
-      const data = await listChildren(
-        path,
-        access_token,
-        queryStringParameters.id,
-        queryStringParameters.key
-      )
-      console.log(data)
-      if (data) {
-        const itemTable = data.value.reduce((arr, ele) => {
-          arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
-          return arr
-        }, [])
-        const docType = headers['content-type'] || ''
+      const isJson = headers['content-type'].includes('json')
+      const data = await listChildren(path, access_token, id, key)
+      // Render html first
+      if (!isJson) {
         return {
           isBase64Encoded: false,
           statusCode: 200,
           headers: {
-            'content-type': docType,
+            'content-type': 'text/html',
           },
-          body: docType.includes('json')
-            ? itemTable
-            : `<!DOCTYPE html>
+          body: `<!DOCTYPE html>
           <html lang="en">
             <head>
               <link
@@ -46,7 +37,11 @@ async function handler({ path, queryStringParameters, headers }) {
               new gridjs.Grid(
                 {
                   columns: ['Name', 'ID'],
-                  data: ${JSON.stringify(itemTable)}
+                  search: true,
+                  server: {
+                    url: '\`\$\{location.href\}\`/?key=${key}',
+                    then: data => data
+                  },
                 }
                 ).render(document.getElementById("wrapper"));
               </script>
@@ -54,6 +49,21 @@ async function handler({ path, queryStringParameters, headers }) {
           </html>
           
           `,
+        }
+      }
+      if (data) {
+        const itemTable = data.value.reduce((arr, ele) => {
+          arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
+          return arr
+        }, [])
+
+        return {
+          isBase64Encoded: false,
+          statusCode: 200,
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: null,
         }
       }
     } else {
@@ -77,5 +87,7 @@ handler({
   queryStringParameters: {
     key: '123',
   },
-  headers: {},
+  headers: {
+    'content-type': 'json',
+  },
 }).then((e) => console.log(e))
