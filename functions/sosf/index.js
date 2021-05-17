@@ -13,14 +13,15 @@ async function handler({ path, queryStringParameters, headers }) {
       const data = await listChildren(
         path,
         access_token,
-        queryStringParameters.id
+        queryStringParameters.id,
+        queryStringParameters.key
       )
       if (data) {
         const itemTable = data.value.reduce((arr, ele) => {
           arr.push({ name: ele.name, id: ele.id })
           return arr
         }, [])
-        const docType = headers['content-type']
+        const docType = headers['content-type'] || ''
         return {
           isBase64Encoded: false,
           statusCode: 200,

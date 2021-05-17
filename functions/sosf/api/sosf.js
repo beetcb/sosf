@@ -94,9 +94,20 @@ exports.getItem = async (path, access_token, item_id) => {
   }
 }
 
-exports.listChildren = async (path, access_token, item_id) => {
-  const base_dir = process.env.base_dir || ''
-  item_id = item_id || ''
+exports.listChildren = async (
+  path,
+  access_token,
+  item_id = '',
+  access_key = ''
+) => {
+  const [base_dir, access_key_reserved] = [
+    process.env.base_dir || '',
+    process.env.access_key || '',
+  ]
+
+  if (access_key !== access_key_reserved) {
+    return null
+  }
 
   const graph =
     path === '/'
