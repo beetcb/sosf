@@ -21,7 +21,7 @@ exports.getItem = (strs, ...parmas) => {
 exports.listChildren = (strs, ...parmas) => {
   const [drive, id, path, select] = parseStrs(strs, parmas)
   if (id) {
-    return `${drive}/items/${id}`
+    return `${drive}/items/${id}/children`
   } else {
     return `${drive}/root:${join(...path).slice(
       0,
