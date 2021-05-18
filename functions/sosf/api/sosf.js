@@ -110,7 +110,7 @@ exports.listChildren = async (
   }
 
   const graph =
-    path === '/'
+    path === '/' && !item_id
       ? listRoot`drive${process.env.drive_api}select${`id,name,file`}`
       : listChildren`drive${process.env.drive_api}id${item_id}path${[
           base_dir,
