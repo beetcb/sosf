@@ -27,10 +27,8 @@ async function handler({ path, queryStringParameters, headers }) {
           body: `<!DOCTYPE html>
           <html lang="en">
             <head>
-              <link
-                href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css"
-                rel="stylesheet"
-              />
+              <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet">
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
             </head>
             <body>
               <div id="wrapper"></div>
