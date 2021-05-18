@@ -38,7 +38,11 @@ async function handler({ path, queryStringParameters, headers }) {
               <script>
               new gridjs.Grid(
                 {
-                  columns: ['Resource', 
+                  columns: ['Resource',
+                    {
+                      name: 'Link',
+                      hidden: true,
+                    },
                     { 
                       name: 'Actions',
                       formatter: (cell, row) => {
@@ -51,11 +55,13 @@ async function handler({ path, queryStringParameters, headers }) {
                   ],
                   search: true,
                   server: {
-                    url: \`\$\{location.href\}?type=json&key=${key || ''}\`,
+                    url: \`\$\{location.href\}${
+                      id ? '&type=json' : `?type=json&key=${key || ''}`
+                    }\`,
                     then: data => data.map(({name, id}) => {
                         const item = {
                           resource: name, 
-                          actions: \`\$\{location.href\}?id=\$\{id\}&key=${
+                          link: \`\$\{location.origin\}/?id=\$\{id\}&key=${
                             key || ''
                           }\`}
                         return item
