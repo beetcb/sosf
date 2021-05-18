@@ -14,9 +14,10 @@
     <div id="wrapper"></div>
     <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
     <script>
-      const { id, key } = Object.fromEntries(
+      const { id, key, type } = Object.fromEntries(
         new URL(location.href).searchParams
       )
+      const isNoParams = !(id || key || type)
       new gridjs.Grid({
         columns: [
           'Resource',
@@ -28,11 +29,11 @@
             name: 'Actions',
             formatter: (cell, row) => {
               return gridjs.h(
-                'button',
+                'a',
                 {
                   className:
                     'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
-                  onClick: () => window.location.replace(row.cells[1].data),
+                  href: row.cells[1].data,
                 },
                 'Link'
               )
@@ -42,7 +43,9 @@
         search: true,
         server: {
           url: encodeURI(
-            `${location.href}${id ? '&' : '?'}type=json&key=${key || ''}`
+            `${location.href}${
+              isNoParams ? `?type=json&key=${key || ''}` : 'json'
+            }`
           ),
           then: (data) =>
             data.map(({ name, params }) => {

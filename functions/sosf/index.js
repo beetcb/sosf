@@ -33,9 +33,13 @@ async function handler({ path, queryStringParameters, headers }) {
           const itemTable = data.value.reduce((arr, ele) => {
             arr.push({
               name: `${ele.name}${ele.file ? '' : '/'}`,
-              params: encodeURIComponent(
-                `?id=${ele.id}&key=${key || ''}&type=${ele.file ? 'file' : ''}`
-              ),
+              params:
+                '?' +
+                new URLSearchParams({
+                  id: ele.id,
+                  key: key || '',
+                  type: ele.file ? 'file' : '',
+                }).toString(),
             })
             return arr
           }, [])
@@ -51,7 +55,7 @@ async function handler({ path, queryStringParameters, headers }) {
         }
       }
     } else {
-      const data = await getItem(path, access_token)
+      const data = await getItem(path, access_token, id)
       if (data)
         return {
           isBase64Encoded: false,
