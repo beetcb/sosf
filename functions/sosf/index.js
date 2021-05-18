@@ -53,15 +53,13 @@ async function handler({ path, queryStringParameters, headers }) {
                   ],
                   search: true,
                   server: {
-                    url: \`\$\{location.href\}${
-                      id ? '&type=json' : `?type=json&key=${key || ''}`
-                    }\`,
-                    then: data => data.map(({name, id}) => {
+                    url: encodeURIComponent(\`\$\{location.href\}${
+                      id ? '&' : '?'
+                    }type=json&key=${key || ''}\`),
+                    then: data => data.map(({name, params}) => {
                         const item = {
                           resource: name, 
-                          link: \`\$\{location.origin\}/?id=\$\{id\}&key=${
-                            key || ''
-                          }\`}
+                          link: \`\$\{location.origin\}/${params}\`}
                         return item
                       }
                     )
@@ -78,7 +76,12 @@ async function handler({ path, queryStringParameters, headers }) {
         const data = await listChildren(path, access_token, id, key)
         if (data) {
           const itemTable = data.value.reduce((arr, ele) => {
-            arr.push({ name: `${ele.name}${ele.file ? '' : '/'}`, id: ele.id })
+            arr.push({
+              name: `${ele.name}${ele.file ? '' : '/'}`,
+              params: encodeURIComponent(
+                `?id=${id}&key=${key || ''}&type=${ele.file ? 'file' : ''}`
+              ),
+            })
             return arr
           }, [])
 
