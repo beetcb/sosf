@@ -38,14 +38,24 @@ async function handler({ path, queryStringParameters, headers }) {
               <script>
               new gridjs.Grid(
                 {
-                  columns: ['Resource', 'Link'],
+                  columns: ['Resource', 
+                    { 
+                      name: 'Actions',
+                      formatter: (cell, row) => {
+                        return gridjs.h('button', {
+                          className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
+                          onClick: () => window.location.replace(row.cells[1].data),
+                        }, 'Link');
+                      }
+                    }
+                  ],
                   search: true,
                   server: {
                     url: \`\$\{location.href\}?type=json&key=${key || ''}\`,
                     then: data => data.map(({name, id}) => {
                         const item = {
                           resource: name, 
-                          link: \`\$\{location.href\}?id=\$\{id\}&key=${
+                          actions: \`\$\{location.href\}?id=\$\{id\}&key=${
                             key || ''
                           }\`}
                         return item
