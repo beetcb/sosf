@@ -1,3 +1,4 @@
+const { readFileSync } = require('fs')
 const { getToken, getItem, listChildren } = require('./api/sosf')
 
 async function handler({ path, queryStringParameters, headers }) {
@@ -11,7 +12,7 @@ async function handler({ path, queryStringParameters, headers }) {
   if (!access_token) {
     return null
   } else {
-    if (path.endsWith('/')) {
+    if (path.endsWith('/') && type !== 'file') {
       const isReturnJson =
         type === 'json' ||
         (headers['content-type'] && headers['content-type'].includes('json'))
@@ -24,53 +25,7 @@ async function handler({ path, queryStringParameters, headers }) {
           headers: {
             'content-type': 'text/html',
           },
-          body: `<!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet">
-              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
-            </head>
-            <body>
-              <div id="wrapper"></div>
-              <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
-              <script>
-              new gridjs.Grid(
-                {
-                  columns: ['Resource',
-                    {
-                      name: 'Link',
-                      hidden: true,
-                    },
-                    { 
-                      name: 'Actions',
-                      formatter: (cell, row) => {
-                        return gridjs.h('button', {
-                          className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
-                          onClick: () => window.location.replace(row.cells[1].data),
-                        }, 'Link');
-                      }
-                    }
-                  ],
-                  search: true,
-                  server: {
-                    url: encodeURIComponent(\`\$\{location.href\}${
-                      id ? '&' : '?'
-                    }type=json&key=${key || ''}\`),
-                    then: data => data.map(({name, params}) => {
-                        const item = {
-                          resource: name, 
-                          link: \`\$\{location.origin\}/${params}\`}
-                        return item
-                      }
-                    )
-                  },
-                }
-                ).render(document.getElementById("wrapper"));
-              </script>
-            </body>
-          </html>
-          
-          `,
+          body: readFileSync('index.html', { encoding: 'utf-8' }),
         }
       } else {
         const data = await listChildren(path, access_token, id, key)
@@ -79,7 +34,7 @@ async function handler({ path, queryStringParameters, headers }) {
             arr.push({
               name: `${ele.name}${ele.file ? '' : '/'}`,
               params: encodeURIComponent(
-                `?id=${id}&key=${key || ''}&type=${ele.file ? 'file' : ''}`
+                `?id=${ele.id}&key=${key || ''}&type=${ele.file ? 'file' : ''}`
               ),
             })
             return arr

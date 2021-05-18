@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"
+    />
+  </head>
+  <body>
+    <div id="wrapper"></div>
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
+    <script>
+      const { id, key } = Object.fromEntries(
+        new URL(location.href).searchParams
+      )
+      new gridjs.Grid({
+        columns: [
+          'Resource',
+          {
+            name: 'Link',
+            hidden: true,
+          },
+          {
+            name: 'Actions',
+            formatter: (cell, row) => {
+              return gridjs.h(
+                'button',
+                {
+                  className:
+                    'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
+                  onClick: () => window.location.replace(row.cells[1].data),
+                },
+                'Link'
+              )
+            },
+          },
+        ],
+        search: true,
+        server: {
+          url: encodeURI(
+            `${location.href}${id ? '&' : '?'}type=json&key=${key || ''}`
+          ),
+          then: (data) =>
+            data.map(({ name, params }) => {
+              const item = {
+                resource: name,
+                link: `${location.origin}/${params}`,
+              }
+              return item
+            }),
+        },
+      }).render(document.getElementById('wrapper'))
+    </script>
+  </body>
+</html>
