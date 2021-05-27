@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@beetcb/sstore": "^0.1.0",
-    "dotenv": "^8.2.0"
+    "@beetcb/sor": "^1.0.0"
   }
 }

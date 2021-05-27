@@ -21,7 +21,7 @@
           "servicePaths": {
             "sosf": "/"
           },
-          "functionRootPath": "./functions",
+          "functionRootPath": "./platforms/cloudbase",
           "functions": [
             {
               "name": "sosf",
