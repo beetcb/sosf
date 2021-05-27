@@ -1,6 +1,6 @@
 {
   "name": "@beetcb/sor",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "SOR makes it easy to access sharepoint & onedrive resource API",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@beetcb/sstore": "^0.1.0",
+    "dotenv": "^10.0.0",
     "node-fetch": "^2.6.1"
   }
 }

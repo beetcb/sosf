@@ -11,7 +11,7 @@ export function getToken(): Promise<string>
 export function getItem(
   path: string,
   access_token: string,
-  item_id?: string,
+  item_id?: string
 ): Promise<ResourceType | null>
 /**
  * Get a folder resource by using listChildren API
@@ -22,8 +22,16 @@ export function getItem(
 export function listChildren(
   path: string,
   access_token: string,
-  item_id?: string,
+  item_id?: string
 ): Promise<ResourceType | null>
+
+export interface GraphAuthEnv {
+  [(key in 'client_id') |
+    'client_secret' |
+    'refresh_token' |
+    'redirect_uri' |
+    'auth_endpoint']: string
+}
 
 export interface ResourceType {
   audio: Audio

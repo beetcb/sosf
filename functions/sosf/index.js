@@ -1,5 +1,5 @@
 const { readFileSync } = require('fs')
-const { getToken, getItem, listChildren } = require('sosf')
+const { getToken, getItem, listChildren } = require('sor')
 
 async function handler({ path, queryStringParameters, headers }) {
   const { id, key, type } = queryStringParameters
