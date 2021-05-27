@@ -44,14 +44,12 @@ async function acquireToken() {
     console.log(auth_endpoint)
     const res = await fetch(`${auth_endpoint}/token`, {
       method: 'POST',
-      body: `${
-        new URLSearchParams({
-          grant_type: 'refresh_token',
-          client_id,
-          client_secret,
-          refresh_token,
-        }).toString()
-      }&redirect_uri=${redirect_uri}`,
+      body: `${new URLSearchParams({
+        grant_type: 'refresh_token',
+        client_id,
+        client_secret,
+        refresh_token,
+      }).toString()}&redirect_uri=${redirect_uri}`,
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
       },
@@ -72,17 +70,18 @@ async function storeToken(res) {
 exports.getToken = async () => {
   // Grab access token
   let token = db()
-  if (!token || checkExpired(token)) token = await acquireToken()
-  else console.log('Grab token from sstore!')
+  if (!token || checkExpired(token)) {
+    token = await acquireToken()
+  } else {
+    console.log('Grab token from sstore!')
+  }
   sstore.close()
   return token.access_token
 }
 
-exports.getItem = async (path, access_token, item_id) => {
+exports.getItem = async (path, access_token, item_id = '') => {
   const base_dir = process.env.base_dir || ''
-  item_id = item_id || ''
-
-  const graph = getItem `drive${process.env.drive_api}id${item_id}path${[
+  const graph = getItem`drive${process.env.drive_api}id${item_id}path${[
     base_dir,
     path,
   ]}select${`@microsoft.graph.downloadUrl`}`
@@ -96,27 +95,15 @@ exports.getItem = async (path, access_token, item_id) => {
   }
 }
 
-exports.listChildren = async (
-  path,
-  access_token,
-  item_id = '',
-  access_key = '',
-) => {
-  const [base_dir, access_key_reserved] = [
-    process.env.base_dir || '',
-    process.env.access_key || '',
-  ]
-
-  if (access_key !== access_key_reserved) {
-    return null
-  }
-
-  const graph = path === '/' && !item_id
-    ? listRoot `drive${process.env.drive_api}select${`id,name,file`}`
-    : listChildren `drive${process.env.drive_api}id${item_id}path${[
-      base_dir,
-      path,
-    ]}select${`id,name,file`}`
+exports.listChildren = async (path, access_token, item_id = '') => {
+  const { base_dir } = process.env
+  const graph =
+    path === '/' && !item_id
+      ? listRoot`drive${process.env.drive_api}select${`id,name,file`}`
+      : listChildren`drive${process.env.drive_api}id${item_id}path${[
+          base_dir,
+          path,
+        ]}select${`id,name,file`}`
 
   const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {

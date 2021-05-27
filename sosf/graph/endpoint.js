@@ -1,4 +1,3 @@
-const fetch = require('node-fetch')
 const { join } = require('path')
 
 const parseStrs = (strs, parmas) =>
