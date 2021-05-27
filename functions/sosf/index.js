@@ -17,9 +17,8 @@ async function handler({ path, queryStringParameters, headers }) {
 
   if (path.endsWith('/') && type !== 'file') {
     // Render folder
-    const isReturnJson =
-      type === 'json' ||
-      (headers['content-type'] && headers['content-type'].includes('json'))
+    const isReturnJson = type === 'json'
+      || (headers['content-type'] && headers['content-type'].includes('json'))
 
     // Render html first
     if (!isReturnJson) {
@@ -37,9 +36,8 @@ async function handler({ path, queryStringParameters, headers }) {
         const itemTable = data.value.reduce((arr, ele) => {
           arr.push({
             name: `${ele.name}${ele.file ? '' : '/'}`,
-            params:
-              '?' +
-              new URLSearchParams({
+            params: '?'
+              + new URLSearchParams({
                 id: ele.id,
                 key: key || '',
                 type: ele.file ? 'file' : '',

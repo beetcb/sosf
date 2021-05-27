@@ -1,0 +1,11 @@
+{
+  "name": "sor",
+  "version": "0.0.0",
+  "description": "SOR makes it easy to access sharepoint & onedrive resource API",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "beetcb",
+  "license": "MIT"
+}
