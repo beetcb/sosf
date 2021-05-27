@@ -1,6 +1,6 @@
 {
   "name": "@beetcb/sor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SOR makes it easy to access sharepoint & onedrive resource API",
   "main": "index.js",
   "types": "index.d.ts",
