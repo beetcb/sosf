@@ -4,7 +4,8 @@
   "description": "serverless onedrive & sharepoint function",
   "main": "index.js",
   "scripts": {
-    "auth": "node auth-cli/auth.js"
+    "auth": "node auth-cli/auth.js",
+    "fmt": "dprint fmt"
   },
   "prettier": {
     "semi": false,

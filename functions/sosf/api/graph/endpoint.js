@@ -23,10 +23,12 @@ exports.listChildren = (strs, ...parmas) => {
   if (id) {
     return `${drive}/items/${id}/children`
   } else {
-    return `${drive}/root:${join(...path).slice(
-      0,
-      -1
-    )}:/children?$select=${select}`
+    return `${drive}/root:${
+      join(...path).slice(
+        0,
+        -1,
+      )
+    }:/children?$select=${select}`
   }
 }
 

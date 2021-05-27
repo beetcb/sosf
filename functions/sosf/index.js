@@ -13,9 +13,8 @@ async function handler({ path, queryStringParameters, headers }) {
     return null
   } else {
     if (path.endsWith('/') && type !== 'file') {
-      const isReturnJson =
-        type === 'json' ||
-        (headers['content-type'] && headers['content-type'].includes('json'))
+      const isReturnJson = type === 'json'
+        || (headers['content-type'] && headers['content-type'].includes('json'))
 
       // Render html first
       if (!isReturnJson) {
@@ -33,9 +32,8 @@ async function handler({ path, queryStringParameters, headers }) {
           const itemTable = data.value.reduce((arr, ele) => {
             arr.push({
               name: `${ele.name}${ele.file ? '' : '/'}`,
-              params:
-                '?' +
-                new URLSearchParams({
+              params: '?'
+                + new URLSearchParams({
                   id: ele.id,
                   key: key || '',
                   type: ele.file ? 'file' : '',
@@ -56,14 +54,14 @@ async function handler({ path, queryStringParameters, headers }) {
       }
     } else {
       const data = await getItem(path, access_token, id)
-      if (data)
+      if (data) {
         return {
           isBase64Encoded: false,
           statusCode: 307,
           headers: { Location: data['@microsoft.graph.downloadUrl'].slice(6) },
           body: null,
         }
-      else return 'Resource not found'
+      } else return 'Resource not found'
     }
   }
 }

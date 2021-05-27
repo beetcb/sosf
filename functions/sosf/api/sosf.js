@@ -44,12 +44,14 @@ async function acquireToken() {
     console.log(auth_endpoint)
     const res = await fetch(`${auth_endpoint}/token`, {
       method: 'POST',
-      body: `${new URLSearchParams({
-        grant_type: 'refresh_token',
-        client_id,
-        client_secret,
-        refresh_token,
-      }).toString()}&redirect_uri=${redirect_uri}`,
+      body: `${
+        new URLSearchParams({
+          grant_type: 'refresh_token',
+          client_id,
+          client_secret,
+          refresh_token,
+        }).toString()
+      }&redirect_uri=${redirect_uri}`,
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
       },
@@ -80,7 +82,7 @@ exports.getItem = async (path, access_token, item_id) => {
   const base_dir = process.env.base_dir || ''
   item_id = item_id || ''
 
-  const graph = getItem`drive${process.env.drive_api}id${item_id}path${[
+  const graph = getItem `drive${process.env.drive_api}id${item_id}path${[
     base_dir,
     path,
   ]}select${`@microsoft.graph.downloadUrl`}`
@@ -98,7 +100,7 @@ exports.listChildren = async (
   path,
   access_token,
   item_id = '',
-  access_key = ''
+  access_key = '',
 ) => {
   const [base_dir, access_key_reserved] = [
     process.env.base_dir || '',
@@ -109,13 +111,12 @@ exports.listChildren = async (
     return null
   }
 
-  const graph =
-    path === '/' && !item_id
-      ? listRoot`drive${process.env.drive_api}select${`id,name,file`}`
-      : listChildren`drive${process.env.drive_api}id${item_id}path${[
-          base_dir,
-          path,
-        ]}select${`id,name,file`}`
+  const graph = path === '/' && !item_id
+    ? listRoot `drive${process.env.drive_api}select${`id,name,file`}`
+    : listChildren `drive${process.env.drive_api}id${item_id}path${[
+      base_dir,
+      path,
+    ]}select${`id,name,file`}`
 
   const res = await fetch(graph, getFetchOpts(access_token))
   if (res.ok) {

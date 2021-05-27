@@ -84,13 +84,15 @@ async function init() {
     {
       type: 'input',
       name: 'code',
-      message: `登录地址:\n${auth_endpoint}/authorize?${new URLSearchParams({
-        client_id,
-        scope: deploy_type
-          ? 'Files.Read.All Files.ReadWrite.All offline_access'
-          : 'Sites.Read.All Sites.ReadWrite.All offline_access',
-        response_type: 'code',
-      }).toString()}&redirect_uri=${redirect_uri}\n请输入浏览器访问后重定向的地址:\n`,
+      message: `登录地址:\n${auth_endpoint}/authorize?${
+        new URLSearchParams({
+          client_id,
+          scope: deploy_type
+            ? 'Files.Read.All Files.ReadWrite.All offline_access'
+            : 'Sites.Read.All Sites.ReadWrite.All offline_access',
+          response_type: 'code',
+        }).toString()
+      }&redirect_uri=${redirect_uri}\n请输入浏览器访问后重定向的地址:\n`,
     },
   ]
 
@@ -123,12 +125,14 @@ async function acquireToken(credentials) {
 
     const res = await fetch(`${auth_endpoint}/token`, {
       method: 'POST',
-      body: `${new URLSearchParams({
-        grant_type: 'authorization_code',
-        code,
-        client_id,
-        client_secret,
-      }).toString()}&redirect_uri=${redirect_uri}`,
+      body: `${
+        new URLSearchParams({
+          grant_type: 'authorization_code',
+          code,
+          client_id,
+          client_secret,
+        }).toString()
+      }&redirect_uri=${redirect_uri}`,
       headers,
     })
     if (res.ok) {
@@ -171,7 +175,7 @@ async function getDriveApi(credentials) {
         headers: {
           Authorization: `bearer ${access_token}`,
         },
-      }
+      },
     )
 
     if (res.ok) {
@@ -199,7 +203,7 @@ function delKey(credentials) {
     path.resolve('./.env'),
     Object.keys(credentials).reduce((env, e) => {
       return `${env}${e} = ${credentials[e]}${EOL}`
-    }, '')
+    }, ''),
   )
   console.warn('环境变量已自动配置 🎉, 文件已保存至 ./.env')
 })()
