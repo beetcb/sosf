@@ -1,0 +1,28 @@
+{
+  "functions": {
+    "api/index.ts": {
+      "memory": 128,
+      "maxDuration": 10,
+      "includeFiles": "/tmp/conf/*"
+    }
+  },
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/index"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "sosf-tcb",
+  "name": "sosf-vercel",
   "version": "1.0.0",
   "description": "sosf entity",
   "main": "index.js",
@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@beetcb/sor": "^1.0.1"
+  },
+  "devDependencies": {
+    "@vercel/node": "^1.11.0"
   }
 }
