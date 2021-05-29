@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@beetcb/sor": "^1.0.1"
+    "@beetcb/sor": "^1.0.3"
   },
   "devDependencies": {
     "@vercel/node": "^1.11.0"
