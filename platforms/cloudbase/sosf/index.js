@@ -4,8 +4,9 @@ const { getToken, getItem, listChildren } = require('@beetcb/sor')
 async function handler({ path, queryStringParameters, headers }) {
   const { id, key, type } = queryStringParameters
   const { access_key } = process.env
+  const isReqFolder = path.endsWith('/')
 
-  if (path === '/favicon.ico' && access_key != key) {
+  if (path === '/favicon.ico' || (isReqFolder && access_key != key)) {
     return null
   }
 
@@ -15,10 +16,11 @@ async function handler({ path, queryStringParameters, headers }) {
     return null
   }
 
-  if (path.endsWith('/') && type !== 'file') {
+  if (isReqFolder && type !== 'file') {
     // Render folder
-    const isReturnJson = type === 'json'
-      || (headers['content-type'] && headers['content-type'].includes('json'))
+    const isReturnJson =
+      type === 'json' ||
+      (headers['content-type'] && headers['content-type'].includes('json'))
 
     // Render html first
     if (!isReturnJson) {
@@ -36,12 +38,13 @@ async function handler({ path, queryStringParameters, headers }) {
         const itemTable = data.value.reduce((arr, ele) => {
           arr.push({
             name: `${ele.name}${ele.file ? '' : '/'}`,
-            params: '?'
-              + new URLSearchParams({
-                id: ele.id,
-                key: key || '',
-                type: ele.file ? 'file' : '',
-              }).toString(),
+            params:
+              '?' +
+              new URLSearchParams(
+                `${ele.id ? `&id=${ele.id}` : ''}${
+                  key && !ele.file ? `&key=${key}` : ''
+                }${ele.file ? '&type=file' : ''}`
+              ).toString(),
           })
           return arr
         }, [])

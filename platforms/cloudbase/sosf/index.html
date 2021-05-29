@@ -44,7 +44,9 @@
         server: {
           url: encodeURI(
             `${location.href}${
-              isNoParams ? `?type=json&key=${key || ''}` : 'json'
+              isNoParams
+                ? `?type=json${key ? `&key=${key}` : ''}`
+                : '&type=json'
             }`
           ),
           then: (data) =>
