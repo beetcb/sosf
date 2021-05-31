@@ -1,6 +1,6 @@
 function initDocument() {
   document.body.innerHTML = `
-    <div class="max-w-md mx-auto justify-center font-serif">
+    <div class="max-w-lg mx-auto justify-center font-serif">
     <h1 class="m-4 text-purple-600 text-center text-2xl">
       SOSF Index
     </h1>
