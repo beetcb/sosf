@@ -19,6 +19,6 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@vercel/node": "^1.11.0"
+    "@vercel/node": "1.11.0"
   }
 }
