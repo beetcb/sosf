@@ -49,25 +49,7 @@ export default async function handler({
             />
           </head>
           <body>
-          <div class="container mx-auto justify-center font-serif">
-          <h1 class="m-4 text-purple-600 text-center text-2xl">
-            SOSF Index
-          </h1>
-          <p class="m-1 text-center text-gray-400">
-            Usage: Type a keyword below to search for your files
-          </p>
-          <div id="wrapper"></div>
-            <footer>
-            <div class="text-gray-400 text-center m-8">
-              Made by
-              <a href="https://github.com/beetcb" class="text-purple-600"
-                >@beetcb</a
-              >
-              </div>
-              </footer>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/gh/beetcb/sosf/platforms/template.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/beetcb/sosf@6170ecb50217c6a0c2d3bd218fa970b93cfa5dfa/platforms/template.js"></script>
           </body>
         </html>        
         `,
