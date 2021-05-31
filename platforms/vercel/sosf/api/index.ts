@@ -48,11 +48,7 @@ export default async function handler({
               href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"
             />
             <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
-<<<<<<< HEAD
-            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@21462ef907b42e2bfabb84579d39fcab0f1ba9d0/platforms/template.js"></script>
-=======
-            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@e8fddc5c396cc15db4c94eaa5993c044a373c48d/platforms/template.js"></script>
->>>>>>> 4d69a8ab434fbfb4e148a3b0be370644fa323468
+            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@ff4cdcc2ce610cfde9134efaddbbb117f605c526/platforms/template.js"></script>
           </head>
           <body></body>
         </html>         
