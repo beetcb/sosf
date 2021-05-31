@@ -5,6 +5,7 @@ export default async function handler({
   queryStringParameters,
   headers,
 }) {
+  console.log(process.env)
   const { id, key, type } = queryStringParameters
   const { access_key } = process.env
   path = new URL(`http://c.c${path}`).pathname

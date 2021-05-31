@@ -4,7 +4,7 @@
   "description": "sosf entity",
   "main": "index.js",
   "scripts": {
-    "vercel-build": "echo \"$dotenv\" > api/.env && ls -a"
+    "vercel-build": "echo \"$dotenv\" > /vercel/path1/platforms/vercel/sosf/.env && pwd"
   },
   "author": "",
   "license": "ISC",
