@@ -11,7 +11,5 @@
   "dependencies": {
     "@beetcb/sor": "^1.0.3"
   },
-  "devDependencies": {
-    "@vercel/node": "^1.11.0"
-  }
+  "devDependencies": {}
 }

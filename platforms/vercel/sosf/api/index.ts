@@ -1,13 +1,9 @@
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
 import { getToken, getItem, listChildren } from '@beetcb/sor'
-import { VercelRequest, VercelResponse } from '@vercel/node'
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { id, key, type, path } = req.query as { [K: string]: string }
-  console.log(type)
+export default async function handler({ path, queryStringParameters, headers }) {
+  const { id, key, type } = queryStringParameters
   const { access_key } = process.env
-  const isReqFolder = !id
+  const isReqFolder = path.endsWith('/') && type !== 'file'
 
   if (path === '/favicon.ico' || (isReqFolder && access_key != key)) {
     return null
@@ -16,15 +12,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const access_token = await getToken()
 
   if (!access_token) {
-    return null
+    return {}
   }
 
   if (isReqFolder && type !== 'file') {
     // Render folder
     const isReturnJson =
       type === 'json' ||
-      (req.headers['content-type'] &&
-        req.headers['content-type'].includes('json'))
+      (headers['content-type'] &&
+        headers['content-type'].includes('json'))
 
     // Render html first
     if (!isReturnJson) {
@@ -92,6 +88,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         headers: { Location: data['@microsoft.graph.downloadUrl'].slice(6) },
         body: null,
       }
-    } else return 'Resource not found'
+    } else return {}
   }
 }

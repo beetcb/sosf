@@ -22,7 +22,12 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/api/index.ts"
+      "destination": "/api"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "NODEJS_AWS_HANDLER_NAME": "default"
+    }
+  }
 }
