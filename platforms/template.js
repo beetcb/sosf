@@ -1,6 +1,6 @@
 function initDocument() {
   document.body.innerHTML = `
-    <div class="container mx-auto justify-center font-serif">
+    <div class="max-w-md mx-auto justify-center font-serif">
     <h1 class="m-4 text-purple-600 text-center text-2xl">
       SOSF Index
     </h1>
@@ -17,10 +17,9 @@ function initDocument() {
         </div>
         </footer>
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
   `
 
-  // render the table
+  // render table
   const { id, key, type } = Object.fromEntries(
     new URL(location.href).searchParams
   )
@@ -67,7 +66,7 @@ function initDocument() {
 
   // center the search box
   const searchHead = document.getElementsByClassName('gridjs-head')[0]
-  searchHead.classList.add('flex', 'justify-center', 'm-1')
+  searchHead.classList.add('flex', 'justify-center', 'm-4')
 }
 
 initDocument()
