@@ -39,12 +39,8 @@
 
   ![sosf demo](https://i.imgur.com/JymEAG3.png)
 
-- 教程完备：本说明带有十分详细的部署教程，各个平台都囊括其中
-
 - <details>
-     <summary>多平台部署支持：腾讯云开发 、LeanCloud、Vercel</summary>
-
-  - [Leancloud 云引擎开发版 (🎉)][leancloud-thanks]：每天 1GB 外网出流量，`sosf` 流量消耗少，我相信 1GB 完全够用了。此外，公网访问必须绑定备案域名，详见 [定价][leancloud-price]；缺点是它有个[休眠策略][leancloud-notice]
+     <summary>多平台部署支持：腾讯云开发 、Vercel</summary>
 
   - [腾讯云开发免费额度 (⚡)][tcb-console]：就速度而言它应该是最快的，缺点是每月有使用量限制 `执行内存(GB) * 执行时间(s)` 为 1000 GBs，云函数公网访问月流量限制为 1 GB，详见 [免费额度][tcb-price]。如果你觉得服务不错，也可按量付费表示支持
 
@@ -172,13 +168,47 @@
 
    然后请通过 [push] 来测试，成功以后每次的 [push] 操作都会部署 sosf 到你的云开发环境
 
-#### 二. Leancloud 云引擎
+#### 二. Vercel Serverless Func
 
-> TODO
+0. 本地获取机密环境变量：
 
-#### 三. Vercel Serverless Func
+   ```bash
+   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd platforms/vercel/sosf/
+   npm i
+   npm run auth
+   # 在此根据提示开始配置
+   ```
 
-> TODO
+   配置完成后，该工具会创建一个 `.env` 文件，内容大致如下：
+
+   ```text
+   client_id = xxx
+   client_secret = xxx
+   redirect_uri = http://localhost
+   auth_endpoint = https://login.partner.microsoftonline.cn/common/oauth2/v2.0
+   refresh_token = 0.AAAAQnNGiYmnI0CvMoN0bxMYyyzk3YwiZepNl9MOI6F2AGAB
+   drive_api = https://microsoftgraph.chinacloudapi.cn/v1.0/sites/xx.sharepoint.cn,b4df3221/drive
+   ```
+
+   **你可以在此增加配置项**，详见 [部署配置](#部署配置)
+
+1. 安装 vercel cli 并登录：
+
+   ```bash
+   npm i -g vercel
+   vercel login
+   ```
+
+2. 部署：
+
+   ```bash
+   vercel --prod
+   ```
+
+   到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
+
+3. 访问地址示例：https://your.app/?path=/path/to/file.md
+
 
 ### 部署配置
 
