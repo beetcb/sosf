@@ -1,10 +1,9 @@
-const { readFileSync } = require('fs')
 const { getToken, getItem, listChildren } = require('@beetcb/sor')
 
 async function handler({ path, queryStringParameters, headers }) {
   const { id, key, type } = queryStringParameters
   const { access_key } = process.env
-  const isReqFolder = path.endsWith('/')
+  const isReqFolder = path.endsWith('/') && type !== 'file'
 
   if (path === '/favicon.ico' || (isReqFolder && access_key != key)) {
     return null
@@ -30,7 +29,25 @@ async function handler({ path, queryStringParameters, headers }) {
         headers: {
           'content-type': 'text/html',
         },
-        body: readFileSync('index.html', { encoding: 'utf-8' }),
+        body: `<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <link
+              href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css"
+              rel="stylesheet"
+            />
+            <link
+              rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"
+            />
+          </head>
+          <body>
+            <div id="wrapper"></div>
+            <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/beetcb/sosf/platforms/template.js"></script>
+          </body>
+        </html>
+        `,
       }
     } else {
       const data = await listChildren(path, access_token, id, key)
