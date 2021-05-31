@@ -41,3 +41,7 @@ new gridjs.Grid({
       }),
   },
 }).render(document.getElementById('wrapper'))
+
+function initDocument() {
+  
+}
