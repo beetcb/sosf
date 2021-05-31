@@ -17,10 +17,9 @@ function initDocument() {
         </div>
         </footer>
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
   `
 
-  // render the table
+  // render table
   const { id, key, type } = Object.fromEntries(
     new URL(location.href).searchParams
   )

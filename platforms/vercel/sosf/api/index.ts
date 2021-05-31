@@ -47,11 +47,11 @@ export default async function handler({
               rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"
             />
+            <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
+            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@e8fddc5c396cc15db4c94eaa5993c044a373c48d/platforms/template.js"></script>
           </head>
-          <body>
-            <script src="https://cdn.jsdelivr.net/gh/beetcb/sosf@6170ecb50217c6a0c2d3bd218fa970b93cfa5dfa/platforms/template.js"></script>
-          </body>
-        </html>        
+          <body></body>
+        </html>         
         `,
       }
     } else {
