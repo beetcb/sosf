@@ -1,4 +1,4 @@
-import { getToken, getItem, listChildren } from '@beetcb/sor'
+import { getItem, getToken, listChildren } from '@beetcb/sor'
 
 export default async function handler({
   path,
@@ -23,9 +23,8 @@ export default async function handler({
 
   if (isReqFolder && type !== 'file') {
     // Render folder
-    const isReturnJson =
-      type === 'json' ||
-      (headers['content-type'] && headers['content-type'].includes('json'))
+    const isReturnJson = type === 'json'
+      || (headers['content-type'] && headers['content-type'].includes('json'))
 
     // Render html first
     if (!isReturnJson) {
@@ -60,12 +59,11 @@ export default async function handler({
         const itemTable = data.value.reduce((arr, ele) => {
           arr.push({
             name: `${ele.name}${ele.file ? '' : '/'}`,
-            params:
-              '?' +
-              new URLSearchParams(
+            params: '?'
+              + new URLSearchParams(
                 `${ele.id ? `&id=${ele.id}` : ''}${
                   key && !ele.file ? `&key=${key}` : ''
-                }${ele.file ? '&type=file' : ''}`
+                }${ele.file ? '&type=file' : ''}`,
               ).toString(),
           })
           return arr

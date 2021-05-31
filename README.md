@@ -205,10 +205,17 @@
    vercel --prod
    ```
 
-   到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains](https://vercel.com/docs/custom-domains#)
+   到此部署完成，访问地址可以在命令行或 vercel 官网看到。需要使用自定义域名，请参考 [custom-domains][vercel-custom-domains]
 
 3. 访问地址示例：https://your.app/?path=/path/to/file.md
 
+4. （可选）配置 Vercel 持续部署，更新功能更便捷：`fork` 本项目，在 Vercel 导入新的 GitHub 项目：
+
+   ![vercel-import][vercel-import]
+
+   `ROOT DIRECTORY` 为 `platforms/vercel/sosf`，Environmental Variables 填入之前生成的 `.env` 中的键值对 (也就是说你需要手动添加多次，目前还没有找到好的解决方案，欢迎开 Issue 讨论解法)
+
+   ![vercel-import-success][vercel-import-success]
 
 ### 部署配置
 
@@ -232,13 +239,9 @@ access_key = 前端界面鉴权密钥，持有此密钥才能访问文件夹内�
 ## 鸣谢
 
 - [Tencent CloudBase][tcb-thanks]
-- [LeanCloud][leancloud-thanks]
 - [Vercel][vercel-thanks]
 
 [tcb-thanks]: https://github.com/TencentCloudBase
-[leancloud-notice]: https://leancloud.cn/docs/leanengine_plan.html#hash643734278
-[leancloud-thanks]: https://github.com/leancloud
-[leancloud-price]: https://www.leancloud.cn/pricing/
 [vercel-thanks]: https://github.com/vercel/vercel
 [vercel-func]: https://vercel.com/docs/serverless-functions/introduction
 [license]: https://github.com/beetcb/sosf/blob/tcb-scf/LICENSE
@@ -251,3 +254,6 @@ access_key = 前端界面鉴权密钥，持有此密钥才能访问文件夹内�
 [tcb-btn-link]: https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=https%3A%2F%2Fgithub.com%2Fbeetcb%2Fsosf&branch=main
 [fair-use]: https://vercel.com/docs/platform/fair-use-policy
 [github-actions-secret]: https://i.imgur.com/sY9Vthc.png
+[vercel-import]: https://i.imgur.com/LpozMqw.png
+[vercel-custom-domains]: https://vercel.com/docs/custom-domains#
+[vercel-import-success]: https://i.imgur.com/K1WbX6Q.png
