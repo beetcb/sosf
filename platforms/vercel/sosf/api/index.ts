@@ -1,13 +1,12 @@
 import { getItem, getToken, listChildren } from '@beetcb/sor'
 
 export default async function handler({
-  path,
+  _,
   queryStringParameters,
   headers,
 }) {
-  const { id, key, type } = queryStringParameters
+  const { id, key, type, path = '/' } = queryStringParameters
   const { access_key } = process.env
-  path = new URL(`http://c.c${path}`).pathname
 
   const isReqFolder = path.endsWith('/') && type !== 'file'
 
@@ -23,8 +22,9 @@ export default async function handler({
 
   if (isReqFolder && type !== 'file') {
     // Render folder
-    const isReturnJson = type === 'json'
-      || (headers['content-type'] && headers['content-type'].includes('json'))
+    const isReturnJson =
+      type === 'json' ||
+      (headers['content-type'] && headers['content-type'].includes('json'))
 
     // Render html first
     if (!isReturnJson) {
@@ -48,7 +48,7 @@ export default async function handler({
             />
             <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-            <script defer src="fb3c58d00df984e0ffde75424a7d787733c42da0"></script>
+            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@fb3c58d00df984e0ffde75424a7d787733c42da0/platforms/template.js"></script>
           </head>
           <body></body>
         </html>         
@@ -60,11 +60,12 @@ export default async function handler({
         const itemTable = data.value.reduce((arr, ele) => {
           arr.push({
             name: `${ele.name}${ele.file ? '' : '/'}`,
-            params: '?'
-              + new URLSearchParams(
+            params:
+              '?' +
+              new URLSearchParams(
                 `${ele.id ? `&id=${ele.id}` : ''}${
                   key && !ele.file ? `&key=${key}` : ''
-                }${ele.file ? '&type=file' : ''}`,
+                }${ele.file ? '&type=file' : ''}`
               ).toString(),
           })
           return arr
@@ -83,10 +84,8 @@ export default async function handler({
     const data = await getItem(path, access_token, id)
     if (data) {
       return {
-        isBase64Encoded: false,
-        statusCode: 307,
+        statusCode: 308,
         headers: { Location: data['@microsoft.graph.downloadUrl'].slice(6) },
-        body: null,
       }
     } else return {}
   }
