@@ -25,15 +25,12 @@ function initDocument() {
       </footer>
     </div>
 `
-  document.body.addEventListener('DOMContentLoaded', (event) => {
-    log.textContent = log.textContent + `DOMContentLoaded\n`
-  })
 
   // render table
-  const { id, key, type } = Object.fromEntries(
-    new URL(location.href).searchParams
+  const { id, key, type, path } = Object.fromEntries(
+    new URL(location.href).searchParams,
   )
-  const isNoParams = !(id || key || type)
+  const isNoParams = !(id || key || type || path)
   new gridjs.Grid({
     columns: [
       'Resource',
@@ -47,27 +44,39 @@ function initDocument() {
           const linkData = row.cells[1].data
           const isFolder = row.cells[0].data.endsWith('/')
           return isFolder
-            ? h(
+            ? linkData === ''
+              ? h(
                 'div',
                 {
+                  onClick: () => history.back(),
                   className: 'cursor-pointer',
-                  onClick: () => location.replace(linkData),
                 },
                 h('i', {
                   className: 'text-indigo-500',
                   'data-feather': 'folder',
-                })
+                }),
               )
-            : h(
-                'div',
+              : h(
+                'a',
                 {
                   className: 'cursor-pointer',
-                  onClick: () => copyText(linkData),
+                  href: linkData,
                 },
                 h('i', {
-                  'data-feather': 'copy',
-                })
+                  className: 'text-indigo-500',
+                  'data-feather': 'folder',
+                }),
               )
+            : h(
+              'div',
+              {
+                className: 'cursor-pointer',
+                onClick: () => copyText(linkData),
+              },
+              h('i', {
+                'data-feather': 'copy',
+              }),
+            )
         },
       },
     ],
@@ -77,16 +86,25 @@ function initDocument() {
       url: encodeURI(
         `${location.href}${
           isNoParams ? `?type=json${key ? `&key=${key}` : ''}` : '&type=json'
-        }`
+        }`,
       ),
-      then: (data) =>
-        data.map(({ name, params }) => {
+      then: (data) => {
+        const fromData = data.map(({ name, params }) => {
           const item = {
             resource: name,
             link: `${location.origin}/${params}`,
           }
           return item
-        }),
+        })
+
+        if (!isNoParams) {
+          fromData.unshift({
+            resource: '../',
+            link: '',
+          })
+        }
+        return fromData
+      },
     },
   })
     .render(document.getElementById('wrapper'))
