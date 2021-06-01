@@ -42,7 +42,7 @@ async function handler({ path, queryStringParameters, headers }) {
             />
             <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@cb565f33d833687a3b23452605a3931a70653e61/platforms/template.js"></script>
+            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@c1d9944f8f6e7a108a9c92489a03ce62825afd13/platforms/template.js"></script>
           </head>
           <body></body>
         </html>  
