@@ -1,4 +1,4 @@
-const h = gridjs.h
+const { h, html } = gridjs
 
 function copyText(data) {
   navigator.clipboard.writeText(data)
@@ -28,10 +28,10 @@ function initDocument() {
 
   // render table
   const { id, key, type, path } = Object.fromEntries(
-    new URL(location.href).searchParams,
+    new URL(location.href).searchParams
   )
   const isNoParams = !(id || key || type || path)
-  const grid = new gridjs.Grid({
+  new gridjs.Grid({
     columns: [
       'Resource',
       {
@@ -43,40 +43,41 @@ function initDocument() {
         formatter: (_, row) => {
           const linkData = row.cells[1].data
           const isFolder = row.cells[0].data.endsWith('/')
+
+          const folderEle = h(
+            'div',
+            {
+              className: 'text-indigo-500',
+            },
+            html(feather.icons.folder.toSvg())
+          )
+
           return isFolder
             ? linkData === ''
               ? h(
+                  'div',
+                  {
+                    onClick: () => history.back(),
+                    className: 'cursor-pointer',
+                  },
+                  folderEle
+                )
+              : h(
+                  'a',
+                  {
+                    className: 'cursor-pointer',
+                    href: linkData,
+                  },
+                  folderEle
+                )
+            : h(
                 'div',
                 {
-                  onClick: () => history.back(),
                   className: 'cursor-pointer',
+                  onClick: () => copyText(linkData),
                 },
-                h('i', {
-                  className: 'text-indigo-500',
-                  'data-feather': 'folder',
-                }),
+                h('i', {}, html(feather.icons.copy.toSvg()))
               )
-              : h(
-                'a',
-                {
-                  className: 'cursor-pointer',
-                  href: linkData,
-                },
-                h('i', {
-                  className: 'text-indigo-500',
-                  'data-feather': 'folder',
-                }),
-              )
-            : h(
-              'div',
-              {
-                className: 'cursor-pointer',
-                onClick: () => copyText(linkData),
-              },
-              h('i', {
-                'data-feather': 'copy',
-              }),
-            )
         },
       },
     ],
@@ -86,7 +87,7 @@ function initDocument() {
       url: encodeURI(
         `${location.href}${
           isNoParams ? `?type=json${key ? `&key=${key}` : ''}` : '&type=json'
-        }`,
+        }`
       ),
       then: (data) => {
         const fromData = data.map(({ name, params }) => {
@@ -106,14 +107,7 @@ function initDocument() {
         return fromData
       },
     },
-  })
-    .render(document.getElementById('wrapper'))
-    .on('ready', () => {
-      if (!feather.isInitialized) {
-        feather.replace()
-        feather.isInitialized = true
-      }
-    })
+  }).render(document.getElementById('wrapper'))
 
   // center the search box
   const searchHead = document.getElementsByClassName('gridjs-head')[0]
