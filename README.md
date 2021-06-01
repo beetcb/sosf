@@ -6,6 +6,12 @@
 
 > 注：SharePoint 文档储存功能和 OneDrive 网盘类似，本说明将他们统称为 OneDrive。
 
+## 演示
+
+SOSF 的前端 DEMO 页面：[sosf.vercel.app][sosf-demo-link]
+
+![SOSF][sosf-demo]
+
 ## 特点
 
 - 使用 [`sstore`](https://github.com/beetcb/sstore) 项目缓存 `access_token`，省去复杂的数据库配置和不必要带宽开销
@@ -35,9 +41,7 @@
 
 - CLI 配置，简单快速：微软 Graph 的授权过程比较麻烦，为此我提供了一个 CLI 工具来加快部署。用户填入所有的配置项后，该工具自动写入配置文件，无需多余操作
 
-- 设计从简：`sosf` 只验证并获取 Onedrive 文件直链，并重定向过去(为方便文件查找，前端提供了简单的文件查找列表界面，让你简单高效地查找文件并获取链接)
-
-  ![sosf demo](https://i.imgur.com/JymEAG3.png)
+- 设计从简：`sosf` 只验证并获取 Onedrive 文件直链，并重定向过去(为方便文件查找，前端提供了简单的文件查找列表界面，让你简单高效地查找文件并复制文件链接)
 
 - <details>
      <summary>多平台部署支持：腾讯云开发 、Vercel</summary>
@@ -241,6 +245,9 @@ access_key = 前端界面鉴权密钥，持有此密钥才能访问文件夹内�
 - [Tencent CloudBase][tcb-thanks]
 - [Vercel][vercel-thanks]
 
+
+[sosf-demo]: https://i.imgur.com/D9bnNzw.png
+[sosf-demo-link]: http://sosf.vercel.app/
 [tcb-thanks]: https://github.com/TencentCloudBase
 [vercel-thanks]: https://github.com/vercel/vercel
 [vercel-func]: https://vercel.com/docs/serverless-functions/introduction
