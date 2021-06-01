@@ -47,7 +47,7 @@ export default async function handler({
             />
             <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.production.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@3e9f7aee8228c40f228d8bba5b90761f03629f25/platforms/template.js"></script>
+            <script defer src="https://cdn.jsdelivr.net/gh/beetcb/sosf@75e0aa5e41583566772a0370774d9d35766d189f/platforms/template.js"></script>
           </head>
           <body></body>
         </html>         
