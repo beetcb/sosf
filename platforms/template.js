@@ -98,7 +98,7 @@ function initDocument() {
           return item
         })
 
-        if (!isNoParams) {
+        if (id) {
           fromData.unshift({
             resource: '../',
             link: '',
