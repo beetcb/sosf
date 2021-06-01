@@ -31,7 +31,7 @@ function initDocument() {
     new URL(location.href).searchParams,
   )
   const isNoParams = !(id || key || type || path)
-  new gridjs.Grid({
+  const grid = new gridjs.Grid({
     columns: [
       'Resource',
       {
@@ -108,7 +108,12 @@ function initDocument() {
     },
   })
     .render(document.getElementById('wrapper'))
-    .on('ready', feather.replace)
+    .on('ready', () => {
+      if (!feather.isInitialized) {
+        feather.replace()
+        feather.isInitialized = true
+      }
+    })
 
   // center the search box
   const searchHead = document.getElementsByClassName('gridjs-head')[0]
