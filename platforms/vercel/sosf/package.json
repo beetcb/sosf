@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "sosf entity",
   "main": "index.js",
-  "scripts": {
-    "vercel-build": "echo \"$dotenv\" > /vercel/path1/platforms/vercel/sosf/.env && pwd"
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
