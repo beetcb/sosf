@@ -88,7 +88,7 @@ SOSF 的前端 DEMO 页面：[sosf.vercel.app][sosf-demo-link]
 0. 配置机密环境变量：
 
    ```bash
-   git clone https://github.com/beetcb/sosf.git && cd platforms/cloudbase/sosf/
+   git clone https://github.com/beetcb/sosf.git
    npm i
    npm run auth
    # 在此根据提示开始配置
@@ -136,7 +136,7 @@ SOSF 的前端 DEMO 页面：[sosf.vercel.app][sosf-demo-link]
 0. 本地获取机密环境变量：
 
    ```bash
-   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd platforms/cloudbase/sosf/
+   git clone https://github.com/beetcb/sosf.git
    npm i
    npm run auth
    # 在此根据提示开始配置
@@ -177,7 +177,7 @@ SOSF 的前端 DEMO 页面：[sosf.vercel.app][sosf-demo-link]
 0. 本地获取机密环境变量：
 
    ```bash
-   git clone -b tcb-scf https://github.com/beetcb/sosf.git && cd platforms/vercel/sosf/
+   git clone https://github.com/beetcb/sosf.git
    npm i
    npm run auth
    # 在此根据提示开始配置
